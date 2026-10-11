@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>工作汇报生成器</title>
+<title>工作汇报省钱小工具</title>
+<meta property="og:title" content="工作汇报省钱小工具">
+<meta name="description" content="本地生成工作汇报，支持多图片纵向拼接、预览和保存。">
+<meta property="og:description" content="本地生成工作汇报，支持多图片纵向拼接、预览和保存。">
 <style>
   :root{
     --red:#B01F24;
@@ -35,7 +38,11 @@
   input:focus,textarea:focus{border-color:var(--red);}
   textarea{min-height:90px;resize:vertical;}
   .row2{display:flex;gap:10px;}
-  .row2>div{flex:1;}
+  .row2>div{flex:1;min-width:0;}
+  input::placeholder,textarea::placeholder{color:#999;opacity:1;}
+  .btn:disabled{opacity:.6;cursor:wait;}
+  #segments img{display:block;width:100%;margin-top:10px;}
+  #status{color:var(--red);overflow-wrap:anywhere;}
   .btn{
     display:block;width:100%;border:none;border-radius:10px;
     padding:13px;font-size:16px;font-weight:bold;color:#fff;
@@ -61,23 +68,23 @@
 </style>
 </head>
 <body>
-<h1>工 作 汇 报 生 成 器</h1>
+<h1>工作汇报省钱小工具</h1>
 
 <div class="card">
   <div class="row2">
     <div>
       <label>标题</label>
-      <input type="text" id="inTitle" value="工 作 汇 报">
+      <input type="text" id="inTitle" placeholder="工作汇报" autocomplete="off">
     </div>
     <div>
       <label>副标题</label>
-      <input type="text" id="inSub" value="工人下班">
+      <input type="text" id="inSub" placeholder="此处填写副标题" autocomplete="off">
     </div>
   </div>
   <div class="row2">
     <div>
       <label>汇报人</label>
-      <input type="text" id="inName" value="靳晓东">
+      <input type="text" id="inName" placeholder="此处填写个人姓名" autocomplete="off">
     </div>
     <div>
       <label>日期</label>
@@ -85,9 +92,9 @@
     </div>
   </div>
   <label>汇报单位</label>
-  <input type="text" id="inUnit" value="花都经开万洋科技城二期">
+  <input type="text" id="inUnit" placeholder="此处填写汇报单位" autocomplete="off">
   <label>备注</label>
-  <textarea id="inNote">值班保安人员，严格遵守门卫制度，监督施工作业人员，进入施工现场，一人一门禁，正确佩戴安全帽，杜绝代打门禁，进入施工现场，并提示注意安全!</textarea>
+  <textarea id="inNote" placeholder="值班保安人员，严格遵守门卫制度，监督施工作业人员，进入施工现场，一人一门禁，正确佩戴安全帽，杜绝代打门禁，测量体温，进入施工现场，并提示注意安全!"></textarea>
 </div>
 
 <div class="card">
@@ -100,12 +107,14 @@
     <button id="posBottom">模板在下</button>
   </div>
   <button class="btn" id="btnGen">生成拼接图</button>
+  <div class="tip" id="status" role="status" aria-live="polite"></div>
 </div>
 
 <div class="card">
   <label>模板实时预览</label>
   <canvas id="preview"></canvas>
   <img id="result" alt="生成结果">
+  <div id="segments"></div>
   <button class="btn gray" id="btnSave" style="display:none">保存图片</button>
   <div class="tip" id="saveTip" style="display:none">如果没有自动下载，长按上方图片选择"保存图片"</div>
 </div>
@@ -170,7 +179,7 @@ function drawTemplate(ctx, data){
   ctx.fillStyle = "#111";
   ctx.font = "bold 42px " + SERIF;
   ctx.textAlign = "left";
-  ctx.fillText("汇报人: " + data.name, FL + notePad, yRow1);
+  if (data.name) ctx.fillText("汇报人: " + data.name, FL + notePad, yRow1);
   ctx.textAlign = "right";
   ctx.fillText("日期: " + data.date, FR - notePad, yRow1);
   ctx.strokeStyle = RED; ctx.lineWidth = 2.5;
@@ -178,7 +187,7 @@ function drawTemplate(ctx, data){
 
   // ---------- 行2：汇报单位 ----------
   ctx.textAlign = "left";
-  ctx.fillText("汇报单位: " + data.unit, FL + notePad, yRow2);
+  if (data.unit) ctx.fillText("汇报单位: " + data.unit, FL + notePad, yRow2);
   line(ctx, FL, yLine2, FR, yLine2);
 
   // ---------- 备注 ----------
@@ -249,7 +258,14 @@ function drawLogo(ctx, x, y){
 
 /* ================= 页面逻辑 ================= */
 const $ = id => document.getElementById(id);
-let photos = [];          // 已加载的 Image 对象
+const DEFAULT_NOTE = "值班保安人员，严格遵守门卫制度，监督施工作业人员，进入施工现场，一人一门禁，正确佩戴安全帽，杜绝代打门禁，测量体温，进入施工现场，并提示注意安全!";
+let photos = []; // 仅保留文件及尺寸，生成时依次解码
+let selectionVersion = 0;
+let busy = false;
+let outputUrls = [];
+const MAX_HEIGHT = 4096;
+const MAX_PIXELS = 4 * 1024 * 1024;
+const MAX_PARTS = 100;
 let templateOnTop = true;
 
 // 日期默认今天
@@ -267,7 +283,7 @@ function getData(){
     name:  $("inName").value.trim(),
     date:  $("inDate").value.trim(),
     unit:  $("inUnit").value.trim(),
-    note:  $("inNote").value.trim(),
+    note:  $("inNote").value.trim() || DEFAULT_NOTE,
   };
 }
 
@@ -277,11 +293,12 @@ function renderPreview(){
   const data = getData();
   // 先量高度
   const tmp = document.createElement("canvas");
-  tmp.width = TW; tmp.height = 4000;
+  tmp.width = TW; tmp.height = 1;
   const tctx = tmp.getContext("2d");
-  tctx.fillStyle = "#fff"; tctx.fillRect(0,0,TW,4000);
+
   const th = drawTemplate(tctx, data);
 
+  if (th > MAX_HEIGHT) { $("status").textContent = "备注过长，模板预览及导出超过安全尺寸，请缩短备注。"; return; }
   cv.width = TW; cv.height = th;
   const ctx = cv.getContext("2d");
   ctx.fillStyle = "#fff"; ctx.fillRect(0,0,TW,th);
@@ -291,82 +308,182 @@ function renderPreview(){
   $(id).addEventListener("input", renderPreview);
 });
 
-// 选图
-$("fileInput").addEventListener("change", e=>{
-  const files = [...e.target.files];
-  if (!files.length) return;
-  photos = [];
-  let loaded = 0;
-  files.forEach((f, i)=>{
+function clearOutput(){
+  $("result").removeAttribute("src");
+  $("result").style.display = "none";
+  $("segments").replaceChildren();
+  outputUrls.forEach(url => URL.revokeObjectURL(url));
+  outputUrls = [];
+  $("btnSave").style.display = $("saveTip").style.display = "none";
+  $("preview").style.display = "block";
+}
+
+function loadPhoto(file){
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
     const img = new Image();
-    img.onload = ()=>{
-      photos[i] = img;
-      if (++loaded === files.length){
-        $("pickBox").textContent = "已选 " + files.length + " 张照片，点击可重新选择";
-        $("pickBox").classList.add("has");
-      }
-    };
-    img.src = URL.createObjectURL(f);
+    const timer = setTimeout(() => finish(new Error("图片加载超时：" + file.name)), 30000);
+    function finish(error){
+      clearTimeout(timer);
+      img.onload = img.onerror = null;
+      URL.revokeObjectURL(url);
+      if (error) { img.src = ""; reject(error); }
+      else resolve(img);
+    }
+    img.onload = () => img.naturalWidth && img.naturalHeight ? finish() : finish(new Error("图片尺寸无效：" + file.name));
+    img.onerror = () => finish(new Error("无法读取图片：" + file.name + "，请换用 JPG、PNG 或 WebP。"));
+    img.src = url;
   });
+}
+
+// FileList 的顺序就是浏览器提供的选择顺序；重新选择完全替换。
+$("fileInput").addEventListener("change", async e => {
+  const files = [...e.target.files];
+  e.target.value = ""; // 允许再次选择同一批文件
+  if (!files.length) return;
+  const version = ++selectionVersion;
+  photos = [];
+  clearOutput();
+  $("btnGen").disabled = true;
+  $("pickBox").classList.remove("has");
+  $("pickBox").textContent = "正在读取 " + files.length + " 张图片…";
+  $("status").textContent = "";
+  const selected = [];
+  try {
+    for (const file of files){
+      if (version !== selectionVersion) return;
+      const img = await loadPhoto(file);
+      selected.push({file, width: img.naturalWidth, height: img.naturalHeight});
+      img.src = "";
+    }
+    if (version !== selectionVersion) return;
+    photos = selected;
+    $("pickBox").textContent = "已选 " + photos.length + " 张照片，点击可重新选择";
+    $("pickBox").classList.add("has");
+  } catch(error){
+    if (version !== selectionVersion) return;
+    $("pickBox").textContent = "选择失败，点击重新选择图片";
+    $("status").textContent = error.message;
+  } finally {
+    if (version === selectionVersion) $("btnGen").disabled = false;
+  }
 });
 
-// 模板位置切换
-$("posTop").onclick = ()=>{ templateOnTop = true;  $("posTop").classList.add("on"); $("posBottom").classList.remove("on"); };
-$("posBottom").onclick = ()=>{ templateOnTop = false; $("posBottom").classList.add("on"); $("posTop").classList.remove("on"); };
+$("posTop").onclick = () => { templateOnTop = true; $("posTop").classList.add("on"); $("posBottom").classList.remove("on"); };
+$("posBottom").onclick = () => { templateOnTop = false; $("posBottom").classList.add("on"); $("posTop").classList.remove("on"); };
 
-// 生成
-$("btnGen").onclick = ()=>{
+function encodeCanvas(cv){
+  return new Promise((resolve, reject) => {
+    cv.toBlob(blob => blob && blob.size ? resolve(blob) : reject(new Error("浏览器无法导出图片，请减少图片数量或尺寸后重试。")), "image/jpeg", .92);
+  });
+}
+function download(url, name){
+  const a = document.createElement("a");
+  a.href = url; a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+}
+
+$("btnGen").onclick = async () => {
+  if (busy) return;
+  busy = true;
+  $("btnGen").disabled = true;
+  $("fileInput").disabled = true;
+  clearOutput();
   const data = getData();
-  // 输出宽度：有照片用照片最大宽度（不低于 900），否则 1280
-  let W = TW;
-  if (photos.length) W = Math.max(900, Math.max(...photos.map(p=>p.naturalWidth)));
-
-  const scale = W / TW;
-  // 量模板高度
-  const tmp = document.createElement("canvas");
-  tmp.width = TW; tmp.height = 4000;
-  const tc = tmp.getContext("2d");
-  tc.fillStyle = "#fff"; tc.fillRect(0,0,TW,4000);
-  const tH = drawTemplate(tc, data) * scale;
-
-  const photoHs = photos.map(p => p.naturalHeight * (W / p.naturalWidth));
-  const totalH = Math.round(tH + photoHs.reduce((a,b)=>a+b, 0));
-
-  const cv = document.createElement("canvas");
-  cv.width = W; cv.height = totalH;
-  const ctx = cv.getContext("2d");
-  ctx.fillStyle = "#fff"; ctx.fillRect(0,0,W,totalH);
-
-  let yCur = 0;
-  const drawTpl = ()=>{
-    ctx.save();
-    ctx.translate(0, yCur);
-    ctx.scale(scale, scale);
-    drawTemplate(ctx, data);
-    ctx.restore();
-    yCur += tH;
-  };
-  const drawPhotos = ()=>{
-    photos.forEach((p, i)=>{
-      ctx.drawImage(p, 0, yCur, W, photoHs[i]);
-      yCur += photoHs[i];
-    });
-  };
-  if (templateOnTop){ drawTpl(); drawPhotos(); }
-  else { drawPhotos(); drawTpl(); }
-
-  const url = cv.toDataURL("image/jpeg", 0.92);
-  $("result").src = url;
-  $("result").style.display = "block";
-  $("preview").style.display = "none";
-  $("btnSave").style.display = "block";
-  $("saveTip").style.display = "block";
-  $("btnSave").onclick = ()=>{
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "工作汇报_" + data.date.replace(/\./g,"") + ".jpg";
-    a.click();
-  };
+  const selected = [...photos];
+  const top = templateOnTop;
+  let cv;
+  try {
+    await document.fonts.ready;
+    if (!LOGO.complete) await LOGO.decode();
+    // 限制输出宽度和每段面积，避免手机上巨幅画布及多个解码图片同时占用内存。
+    const W = selected.length ? Math.min(TW, Math.max(900, ...selected.map(p => p.width))) : TW;
+    const scale = W / TW;
+    const measure = document.createElement("canvas");
+    measure.width = TW; measure.height = 1;
+    const templateH = drawTemplate(measure.getContext("2d"), data);
+    measure.width = measure.height = 1;
+    if (templateH > MAX_HEIGHT) throw new Error("备注过长，模板超过安全尺寸，请缩短备注后重试。");
+    const template = {template:true, height:templateH * scale};
+    const items = selected.map(p => ({...p, height:p.height * W / p.width}));
+    top ? items.unshift(template) : items.push(template);
+    let totalH = 0;
+    items.forEach(item => { item.y = totalH; totalH += item.height; });
+    const fullH = Math.ceil(totalH);
+    let partH = Math.min(MAX_HEIGHT, Math.floor(MAX_PIXELS / W));
+    let urls;
+    // 导出失败时减小分段尺寸重试；所有分段成功后才展示结果。
+    while (!urls){
+      const count = Math.ceil(fullH / partH);
+      if (!Number.isSafeInteger(fullH) || count > MAX_PARTS) throw new Error("图片总长度过大（最多 100 段），请减少图片数量后分批生成。");
+      const pending = [];
+      try {
+        for (let i = 0; i < count; i++){
+          $("status").textContent = count > 1 ? "长图分段生成中：" + (i+1) + "/" + count : "正在生成图片…";
+          await new Promise(resolve => setTimeout(resolve, 0));
+          const offset = i * partH;
+          const height = Math.min(partH, fullH - offset);
+          cv = document.createElement("canvas"); cv.width = W; cv.height = height;
+          const ctx = cv.getContext("2d");
+          if (!ctx) throw new Error("无法创建画布");
+          ctx.fillStyle = "#fff"; ctx.fillRect(0,0,W,height);
+          // 检查画布末端可读写，不能只相信设置的宽高。
+          if (ctx.getImageData(W-1,height-1,1,1).data[3] !== 255) throw new Error("画布超出浏览器能力");
+          for (const item of items){
+            if (item.y >= offset + height || item.y + item.height <= offset) continue;
+            if (item.template){
+              ctx.save(); ctx.translate(0,item.y-offset); ctx.scale(scale,scale);
+              drawTemplate(ctx,data); ctx.restore();
+            } else {
+              const img = await loadPhoto(item.file);
+              try { ctx.drawImage(img,0,item.y-offset,W,item.height); }
+              finally { img.src = ""; }
+            }
+          }
+          const blob = await encodeCanvas(cv);
+          // 确认编码后的尺寸，防止空白或静默截断。
+          const url = URL.createObjectURL(blob);
+          pending.push(url);
+          const check = new Image(); check.src = url; await check.decode();
+          if (check.naturalWidth !== W || check.naturalHeight !== height) throw new Error("导出尺寸不完整");
+          check.src = "";
+          cv.width = cv.height = 1;
+        }
+        urls = pending;
+      } catch(error){
+        pending.forEach(url => URL.revokeObjectURL(url));
+        if (cv) cv.width = cv.height = 1;
+        if (partH <= 512 || /无法读取|加载超时|尺寸无效/.test(error.message)) throw error;
+        partH = Math.max(512, Math.floor(partH / 2));
+      }
+    }
+    outputUrls = urls;
+    const base = "工作汇报_" + data.date.replace(/[\\/:*?"<>|.]/g, "");
+    $("preview").style.display = "none";
+    if (urls.length === 1){
+      $("result").src = urls[0]; $("result").style.display = "block";
+      $("btnSave").style.display = "block";
+      $("btnSave").onclick = () => download(urls[0],base+".jpg");
+    } else {
+      urls.forEach((url,i) => {
+        const img = document.createElement("img"); img.src = url; img.alt = "生成结果第 " + (i+1) + " 段";
+        const btn = document.createElement("button"); btn.className = "btn gray";
+        btn.textContent = "保存第 " + (i+1) + "/" + urls.length + " 段";
+        btn.onclick = () => download(url,base+"_"+String(i+1).padStart(3,"0")+".jpg");
+        $("segments").append(img,btn);
+      });
+    }
+    $("saveTip").style.display = "block";
+    $("status").textContent = urls.length > 1 ? "长图超过单张安全尺寸，已完整分为 " + urls.length + " 段，请按顺序逐段保存。" : "生成完成，图片仅在本地处理。";
+  } catch(error){
+    clearOutput();
+    $("status").textContent = "生成失败：" + error.message + " 请减少图片数量或尺寸后重试。";
+  } finally {
+    if (cv) cv.width = cv.height = 1;
+    busy = false;
+    $("btnGen").disabled = false;
+    $("fileInput").disabled = false;
+  }
 };
 
 renderPreview();
