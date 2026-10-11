@@ -99,7 +99,7 @@
 
 <div class="card">
   <div class="photo-pick" id="pickBox" onclick="document.getElementById('fileInput').click()">
-    点击选择照片（可多选，普通照片双列，长截图单独一行）
+    点击选择照片（可多选，按选择顺序逐张向下拼接）
   </div>
   <input type="file" id="fileInput" accept="image/*" multiple>
   <div class="pos-toggle">
@@ -384,24 +384,12 @@ function download(url, name){
   document.body.appendChild(a); a.click(); a.remove();
 }
 
-// 普通照片从左到右、从上到下排列。同一行共用高度，按原比例分配宽度，避免留白或裁切。
+// 所有图片逐张纵向排列，不根据宽高比例将两张图片并排。
 function photoRows(selected, width){
-  const rows = [];
-  for (let i = 0; i < selected.length;){
-    const first = selected[i++];
-    const pair = first.height / first.width <= 3 && i < selected.length && selected[i].height / selected[i].width <= 3;
-    const pictures = pair ? [first, selected[i++]] : [first];
-    const height = width / pictures.reduce((sum,p) => sum + p.width / p.height, 0);
-    let x = 0;
-    const cells = pictures.map(p => {
-      const cellWidth = height * p.width / p.height;
-      const cell = {photo:p, x, width:cellWidth, height};
-      x += cellWidth;
-      return cell;
-    });
-    rows.push({height, cells});
-  }
-  return rows;
+  return selected.map(photo => {
+    const height = width * photo.height / photo.width;
+    return {height, cells:[{photo, x:0, width, height}]};
+  });
 }
 
 function reportBlocks(selected, width, templateH, top){
