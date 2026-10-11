@@ -92,14 +92,14 @@
     </div>
   </div>
   <label>汇报单位</label>
-  <input type="text" id="inUnit" placeholder="此处填写汇报单位" autocomplete="off">
+  <input type="text" id="inUnit" placeholder="花都经开万洋科技城二期" autocomplete="off">
   <label>备注</label>
   <textarea id="inNote" placeholder="值班保安人员，严格遵守门卫制度，监督施工作业人员，进入施工现场，一人一门禁，正确佩戴安全帽，杜绝代打门禁，测量体温，进入施工现场，并提示注意安全!"></textarea>
 </div>
 
 <div class="card">
   <div class="photo-pick" id="pickBox" onclick="document.getElementById('fileInput').click()">
-    点击选择长图照片（可多选，依次向下拼接）
+    点击选择照片（可多选，普通照片双列，长截图单独一行）
   </div>
   <input type="file" id="fileInput" accept="image/*" multiple>
   <div class="pos-toggle">
@@ -263,8 +263,9 @@ let photos = []; // 仅保留文件及尺寸，生成时依次解码
 let selectionVersion = 0;
 let busy = false;
 let outputUrls = [];
-const MAX_HEIGHT = 4096;
-const MAX_PIXELS = 4 * 1024 * 1024;
+const DEFAULT_UNIT = "花都经开万洋科技城二期";
+const MAX_HEIGHT = 16384;
+const MAX_PIXELS = 16 * 1024 * 1024;
 const MAX_PARTS = 100;
 let templateOnTop = true;
 
@@ -282,7 +283,7 @@ function getData(){
     sub:   $("inSub").value.trim(),
     name:  $("inName").value.trim(),
     date:  $("inDate").value.trim(),
-    unit:  $("inUnit").value.trim(),
+    unit:  $("inUnit").value.trim() || DEFAULT_UNIT,
     note:  $("inNote").value.trim() || DEFAULT_NOTE,
   };
 }
@@ -383,6 +384,63 @@ function download(url, name){
   document.body.appendChild(a); a.click(); a.remove();
 }
 
+// 普通照片从左到右、从上到下排列。同一行共用高度，按原比例分配宽度，避免留白或裁切。
+function photoRows(selected, width){
+  const rows = [];
+  for (let i = 0; i < selected.length;){
+    const first = selected[i++];
+    const pair = first.height / first.width <= 3 && i < selected.length && selected[i].height / selected[i].width <= 3;
+    const pictures = pair ? [first, selected[i++]] : [first];
+    const height = width / pictures.reduce((sum,p) => sum + p.width / p.height, 0);
+    let x = 0;
+    const cells = pictures.map(p => {
+      const cellWidth = height * p.width / p.height;
+      const cell = {photo:p, x, width:cellWidth, height};
+      x += cellWidth;
+      return cell;
+    });
+    rows.push({height, cells});
+  }
+  return rows;
+}
+
+function reportBlocks(selected, width, templateH, top){
+  const rows = photoRows(selected,width);
+  const tplHeight = templateH * width / TW;
+  if (!rows.length) return [{height:tplHeight, template:true, templateY:0, cells:[]}];
+  const index = top ? 0 : rows.length - 1;
+  const block = rows[index];
+  block.template = true;
+  block.templateY = top ? 0 : block.height;
+  block.photoY = top ? tplHeight : 0;
+  block.height += tplHeight; // 模板与相邻完整照片行绑定，不生成孤立模板尾段。
+  return rows;
+}
+
+function splitBlocks(blocks, limit){
+  const pack = capacity => {
+    const groups = []; let group = [], height = 0;
+    for (const block of blocks){
+      if (group.length && Math.ceil(height + block.height) > capacity){
+        groups.push(group); group = []; height = 0;
+      }
+      group.push(block); height += block.height;
+    }
+    if (group.length) groups.push(group);
+    return groups;
+  };
+  const count = pack(limit).length;
+  // 在最少段数下缩小各段最大高度，让剩余行重新分配，避免过短尾段。
+  let low = Math.ceil(Math.max(...blocks.map(b => b.height)));
+  let high = limit;
+  while (low < high){
+    const middle = Math.floor((low + high) / 2);
+    if (pack(middle).length <= count) high = middle;
+    else low = middle + 1;
+  }
+  return pack(low);
+}
+
 $("btnGen").onclick = async () => {
   if (busy) return;
   busy = true;
@@ -396,49 +454,52 @@ $("btnGen").onclick = async () => {
   try {
     await document.fonts.ready;
     if (!LOGO.complete) await LOGO.decode();
-    // 限制输出宽度和每段面积，避免手机上巨幅画布及多个解码图片同时占用内存。
-    const W = selected.length ? Math.min(TW, Math.max(900, ...selected.map(p => p.width))) : TW;
-    const scale = W / TW;
+    // 只使用 Canvas 像素坐标；CSS 尺寸与 DPR 不参与拼图尺寸计算。
+    const preferredWidth = selected.length ? Math.min(TW, Math.max(900, ...selected.map(p => p.width))) : TW;
     const measure = document.createElement("canvas");
     measure.width = TW; measure.height = 1;
     const templateH = drawTemplate(measure.getContext("2d"), data);
     measure.width = measure.height = 1;
     if (templateH > MAX_HEIGHT) throw new Error("备注过长，模板超过安全尺寸，请缩短备注后重试。");
-    const template = {template:true, height:templateH * scale};
-    const items = selected.map(p => ({...p, height:p.height * W / p.width}));
-    top ? items.unshift(template) : items.push(template);
-    let totalH = 0;
-    items.forEach(item => { item.y = totalH; totalH += item.height; });
-    const fullH = Math.ceil(totalH);
-    let partH = Math.min(MAX_HEIGHT, Math.floor(MAX_PIXELS / W));
     let urls;
-    // 导出失败时减小分段尺寸重试；所有分段成功后才展示结果。
-    while (!urls){
-      const count = Math.ceil(fullH / partH);
-      if (!Number.isSafeInteger(fullH) || count > MAX_PARTS) throw new Error("图片总长度过大（最多 100 段），请减少图片数量后分批生成。");
+    // 先尝试较大的移动端画布预算，实际读写和编码失败后再按完整行降级。
+    for (const budget of [1, .5, .25, .125]){
+      const maxHeight = Math.floor(MAX_HEIGHT * budget);
+      const maxPixels = Math.floor(MAX_PIXELS * budget);
+      const largest = Math.max(...reportBlocks(selected,preferredWidth,templateH,top).map(b => b.height));
+      // 超长的单张照片不能按像素切开；统一等比例缩小整个报告宽度使完整行可容纳。
+      const W = Math.floor(preferredWidth * Math.min(1, maxHeight / largest, Math.sqrt(maxPixels / (preferredWidth * largest))));
+      if (!Number.isFinite(W) || W < 320) throw new Error("单张长截图过长，完整导出会过于模糊，请选择较短的截图后重试。");
+      const scale = W / TW;
+      const blocks = reportBlocks(selected,W,templateH,top);
+      const limit = Math.min(maxHeight,Math.floor(maxPixels / W));
+      const groups = splitBlocks(blocks,limit);
+      const count = groups.length;
+      if (count > MAX_PARTS) throw new Error("图片总长度过大（最多 100 段），请减少图片数量后分批生成。");
       const pending = [];
       try {
         for (let i = 0; i < count; i++){
           $("status").textContent = count > 1 ? "长图分段生成中：" + (i+1) + "/" + count : "正在生成图片…";
           await new Promise(resolve => setTimeout(resolve, 0));
-          const offset = i * partH;
-          const height = Math.min(partH, fullH - offset);
+          const height = Math.ceil(groups[i].reduce((sum,b) => sum + b.height,0));
           cv = document.createElement("canvas"); cv.width = W; cv.height = height;
           const ctx = cv.getContext("2d");
           if (!ctx) throw new Error("无法创建画布");
           ctx.fillStyle = "#fff"; ctx.fillRect(0,0,W,height);
           // 检查画布末端可读写，不能只相信设置的宽高。
           if (ctx.getImageData(W-1,height-1,1,1).data[3] !== 255) throw new Error("画布超出浏览器能力");
-          for (const item of items){
-            if (item.y >= offset + height || item.y + item.height <= offset) continue;
-            if (item.template){
-              ctx.save(); ctx.translate(0,item.y-offset); ctx.scale(scale,scale);
+          let y = 0;
+          for (const block of groups[i]){
+            if (block.template){
+              ctx.save(); ctx.translate(0,y + block.templateY); ctx.scale(scale,scale);
               drawTemplate(ctx,data); ctx.restore();
-            } else {
-              const img = await loadPhoto(item.file);
-              try { ctx.drawImage(img,0,item.y-offset,W,item.height); }
+            }
+            for (const cell of block.cells){
+              const img = await loadPhoto(cell.photo.file);
+              try { ctx.drawImage(img,cell.x,y + (block.photoY || 0),cell.width,cell.height); }
               finally { img.src = ""; }
             }
+            y += block.height;
           }
           const blob = await encodeCanvas(cv);
           // 确认编码后的尺寸，防止空白或静默截断。
@@ -450,11 +511,11 @@ $("btnGen").onclick = async () => {
           cv.width = cv.height = 1;
         }
         urls = pending;
+        break;
       } catch(error){
         pending.forEach(url => URL.revokeObjectURL(url));
         if (cv) cv.width = cv.height = 1;
-        if (partH <= 512 || /无法读取|加载超时|尺寸无效/.test(error.message)) throw error;
-        partH = Math.max(512, Math.floor(partH / 2));
+        if (budget === .125 || /无法读取|加载超时|尺寸无效/.test(error.message)) throw error;
       }
     }
     outputUrls = urls;
