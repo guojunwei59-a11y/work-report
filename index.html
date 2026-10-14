@@ -30,7 +30,7 @@
   }
   label{display:block;font-size:13px;color:#666;margin:10px 0 4px;}
   label:first-child{margin-top:0;}
-  input[type=text],textarea{
+  input[type=text],input[type=number],select,textarea{
     width:100%;border:1px solid #ddd;border-radius:8px;
     padding:9px 10px;font-size:15px;outline:none;
     font-family:inherit;
@@ -98,6 +98,23 @@
 </div>
 
 <div class="card">
+  <label for="photoMode">图片输入模式</label>
+  <select id="photoMode">
+    <option value="normal">普通照片拼接</option>
+    <option value="grid">水印相机双列长图转三列</option>
+  </select>
+  <div id="gridInputs" hidden>
+    <label for="gridFile1">第1张双列长图</label>
+    <input id="gridFile1" type="file" accept="image/*">
+    <label for="gridCount1">第1张实际照片数</label>
+    <input id="gridCount1" type="number" min="1" max="100" step="1" value="10">
+    <label for="gridFile2">第2张双列长图（可不选）</label>
+    <input id="gridFile2" type="file" accept="image/*">
+    <label for="gridCount2">第2张实际照片数</label>
+    <input id="gridCount2" type="number" min="1" max="100" step="1" value="5">
+    <div class="tip">每行3张。按原图每行先左后右提取前 N 张，忽略末尾空白格。请填写实际数量，上传带完整白色分隔线的原始长图。</div>
+    <div class="tip" id="gridInfo" role="status"></div>
+  </div>
   <div class="photo-pick" id="pickBox" onclick="document.getElementById('fileInput').click()">
     点击选择照片（可多选，按选择顺序逐张向下拼接）
   </div>
@@ -268,6 +285,37 @@ const MAX_HEIGHT = 16384;
 const MAX_PIXELS = 16 * 1024 * 1024;
 const MAX_PARTS = 100;
 let templateOnTop = true;
+const gridSources = [null,null];
+let gridLoading = 0;
+
+$("photoMode").addEventListener("change", () => {
+  clearOutput();
+  const grid = $("photoMode").value === "grid";
+  $("gridInputs").hidden = !grid;
+  $("pickBox").hidden = grid;
+  $("status").textContent = "";
+});
+for (let i = 0; i < 2; i++){
+  const input = $("gridFile" + (i+1));
+  input.addEventListener("change", async () => {
+    const file = input.files[0];
+    gridSources[i] = null;
+    clearOutput();
+    if (!file) return;
+    gridLoading++;
+    $("btnGen").disabled = true;
+    input.disabled = true;
+    try {
+      const img = await loadPhoto(file);
+      gridSources[i] = {file,width:img.naturalWidth,height:img.naturalHeight};
+      img.src = "";
+      $("gridInfo").textContent = "已选 " + gridSources.filter(Boolean).length + " 张双列长图";
+      $("status").textContent = "";
+    } catch(error){ $("status").textContent = error.message; }
+    finally { gridLoading--; input.disabled = false; $("btnGen").disabled = gridLoading > 0; }
+  });
+  $("gridCount" + (i+1)).addEventListener("input",clearOutput);
+}
 
 // 日期默认今天
 (function(){
@@ -386,10 +434,84 @@ function download(url, name){
 
 // 所有图片逐张纵向排列，不根据宽高比例将两张图片并排。
 function photoRows(selected, width){
+  if (selected[0]?.crop){
+    const rows = [], gap = width * .004, cellW = (width - gap * 2) / 3;
+    for (let i = 0; i < selected.length; i += 3){
+      const cells = selected.slice(i,i+3).map((photo,j) => ({photo,x:j*(cellW+gap),width:cellW,height:cellW*photo.height/photo.width}));
+      rows.push({height:Math.max(...cells.map(c=>c.height)) + (i+3 < selected.length ? gap : 0),cells});
+    }
+    return rows;
+  }
   return selected.map(photo => {
     const height = width * photo.height / photo.width;
     return {height, cells:[{photo, x:0, width, height}]};
   });
+}
+
+// 只检测规则白色网格线，不识别照片内容。小画布用于定位，最终直接从原图裁切绘制。
+function findGridCrops(img, count){
+  const cv = document.createElement("canvas");
+  const ratio = Math.min(1,512/img.naturalWidth,4096/img.naturalHeight);
+  cv.width = Math.round(img.naturalWidth*ratio);
+  cv.height = Math.round(img.naturalHeight*ratio);
+  const ctx = cv.getContext("2d",{willReadFrequently:true});
+  ctx.drawImage(img,0,0,cv.width,cv.height);
+  const {data} = ctx.getImageData(0,0,cv.width,cv.height);
+  const white = (x,y) => { const p=(y*cv.width+x)*4; return data[p]>=235 && data[p+1]>=235 && data[p+2]>=235; };
+  const bands = (size,other,vertical) => {
+    const found=[]; let start=-1;
+    for (let a=0;a<=size;a++){
+      let hits=0;
+      if (a<size) for (let b=0;b<other;b++) if(vertical?white(a,b):white(b,a)) hits++;
+      const isLine=a<size && hits/other>=.94;
+      if (isLine && start<0) start=a;
+      if (!isLine && start>=0){found.push({start,end:a});start=-1;}
+    }
+    return found;
+  };
+  try {
+    const xb=bands(cv.width,cv.height,true), yb=bands(cv.height,cv.width,false);
+    const left=xb.find(b=>b.start===0), right=xb.find(b=>b.end===cv.width);
+    const middle=xb.filter(b=>b.start>cv.width*.4 && b.end<cv.width*.6);
+    if (!left || !right || middle.length!==1 || yb.length<2 || yb[0].start!==0 || yb.at(-1).end!==cv.height) throw new Error("网格线不完整");
+    const cols=[[left.end,middle[0].start],[middle[0].end,right.start]];
+    const rows=[];
+    for(let i=0;i<yb.length-1;i++){
+      const y1=yb[i].end, y2=yb[i+1].start;
+      if(y2-y1>cv.height*.01) rows.push([y1,y2]);
+    }
+    const average=rows.reduce((s,r)=>s+r[1]-r[0],0)/rows.length;
+    if (!rows.length || rows.some(r=>Math.abs(r[1]-r[0]-average)>average*.05) || Math.abs((cols[0][1]-cols[0][0])-(cols[1][1]-cols[1][0]))>cv.width*.02) throw new Error("网格不规则");
+    if(count>rows.length*2) throw new Error("实际照片数超过检测到的网格容量，请修正数量");
+    const crops=[];
+    for(let i=0;i<count;i++){
+      const col=cols[i%2], row=rows[Math.floor(i/2)];
+      // 将检测边缘向白线内扩展一个采样像素，避免 JPEG/缩放误差切掉有效画面。
+      const x=Math.max(0,Math.floor((col[0]-1)*img.naturalWidth/cv.width));
+      const y=Math.max(0,Math.floor((row[0]-1)*img.naturalHeight/cv.height));
+      const right=Math.min(img.naturalWidth,Math.ceil((col[1]+1)*img.naturalWidth/cv.width));
+      const bottom=Math.min(img.naturalHeight,Math.ceil((row[1]+1)*img.naturalHeight/cv.height));
+      crops.push({x,y,width:right-x,height:bottom-y});
+    }
+    return crops;
+  } catch(error){throw new Error("双列长图裁切失败："+error.message+"。请检查实际照片数，并重新选择带完整白色网格线的原始双列长图。");}
+  finally {cv.width=cv.height=1;}
+}
+
+async function gridPhotos(){
+  if(!gridSources[0]) throw new Error("请先上传第1张双列长图");
+  const result=[];
+  for(let i=0;i<2;i++){
+    const source=gridSources[i];
+    if(!source) continue;
+    const count=Number($("gridCount"+(i+1)).value);
+    if(!Number.isInteger(count) || count<1 || count>100) throw new Error("第"+(i+1)+"张实际照片数须为1至100的整数");
+    const img=await loadPhoto(source.file);
+    try { for(const crop of findGridCrops(img,count)) result.push({file:source.file,crop,width:crop.width,height:crop.height}); }
+    finally {img.src="";}
+  }
+  $("gridInfo").textContent="提取 "+result.length+" 张照片，将按3列 × "+Math.ceil(result.length/3)+"行排列";
+  return result;
 }
 
 function reportBlocks(selected, width, templateH, top){
@@ -430,20 +552,24 @@ function splitBlocks(blocks, limit){
 }
 
 $("btnGen").onclick = async () => {
-  if (busy) return;
+  if (busy || gridLoading) return;
   busy = true;
   $("btnGen").disabled = true;
   $("fileInput").disabled = true;
   clearOutput();
   const data = getData();
-  const selected = [...photos];
+  let selected = [...photos];
+  const grid = $("photoMode").value === "grid";
+  const gridControls = ["photoMode","gridFile1","gridFile2","gridCount1","gridCount2"];
+  gridControls.forEach(id=>$(id).disabled=true);
   const top = templateOnTop;
-  let cv;
+  let cv, decoded, decodedFile;
   try {
+    if(grid) selected=await gridPhotos();
     await document.fonts.ready;
     if (!LOGO.complete) await LOGO.decode();
     // 只使用 Canvas 像素坐标；CSS 尺寸与 DPR 不参与拼图尺寸计算。
-    const preferredWidth = selected.length ? Math.min(TW, Math.max(900, ...selected.map(p => p.width))) : TW;
+    const preferredWidth = grid ? TW : selected.length ? Math.min(TW, Math.max(900, ...selected.map(p => p.width))) : TW;
     const measure = document.createElement("canvas");
     measure.width = TW; measure.height = 1;
     const templateH = drawTemplate(measure.getContext("2d"), data);
@@ -483,12 +609,18 @@ $("btnGen").onclick = async () => {
               drawTemplate(ctx,data); ctx.restore();
             }
             for (const cell of block.cells){
-              const img = await loadPhoto(cell.photo.file);
-              try { ctx.drawImage(img,cell.x,y + (block.photoY || 0),cell.width,cell.height); }
-              finally { img.src = ""; }
+              if(decodedFile!==cell.photo.file){
+                if(decoded) decoded.src="";
+                decoded=await loadPhoto(cell.photo.file); decodedFile=cell.photo.file;
+              }
+              const crop=cell.photo.crop;
+              if(crop) ctx.drawImage(decoded,crop.x,crop.y,crop.width,crop.height,cell.x,y+(block.photoY||0),cell.width,cell.height);
+              else ctx.drawImage(decoded,cell.x,y+(block.photoY||0),cell.width,cell.height);
             }
             y += block.height;
           }
+          if(decoded) decoded.src="";
+          decoded=decodedFile=null;
           const blob = await encodeCanvas(cv);
           // 确认编码后的尺寸，防止空白或静默截断。
           const url = URL.createObjectURL(blob);
@@ -528,10 +660,12 @@ $("btnGen").onclick = async () => {
     clearOutput();
     $("status").textContent = "生成失败：" + error.message + " 请减少图片数量或尺寸后重试。";
   } finally {
+    if(decoded) decoded.src="";
     if (cv) cv.width = cv.height = 1;
     busy = false;
     $("btnGen").disabled = false;
     $("fileInput").disabled = false;
+    gridControls.forEach(id=>$(id).disabled=false);
   }
 };
 
