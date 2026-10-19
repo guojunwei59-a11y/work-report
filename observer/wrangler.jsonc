@@ -3,6 +3,7 @@
   "account_id": "e7390eec0a8f17305f31ec0d540e6df1",
   "main": "worker.mjs",
   "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["global_fetch_strictly_public"],
   "workers_dev": true,
   "preview_urls": false,
   "observability": { "enabled": false },
