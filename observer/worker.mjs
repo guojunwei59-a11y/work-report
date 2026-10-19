@@ -87,6 +87,8 @@ export default {
   if(url.pathname==='/robots.txt')response=new Response(`User-agent: *\nAllow: /\nSitemap: ${origin}/sitemap.xml\n`,{headers:{'Content-Type':'text/plain; charset=utf-8'}});
   else{
    const target=new URL(url.pathname.slice(1),upstream);
+   // Refresh the origin cache namespace when the static schema changes.
+   target.searchParams.set('zoo-version','1.4');
    const fetched=await fetch(target,{method:request.method,headers:{'User-Agent':'AI-Zoo-Observer-Origin/1.0'},redirect:'manual',cf:{cacheTtl:120,cacheEverything:true}});
    response=new Response(fetched.body,{status:fetched.status,headers:fetched.headers});
    response.headers.delete('Set-Cookie');response.headers.set('X-Content-Type-Options','nosniff');
