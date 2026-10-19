@@ -33,7 +33,7 @@ test('date archives link to real files; all failures preserve data; retention st
    await update({project,time:'2026-10-19T04:30:00Z',collector:async(id,t)=>normalize([row],id,t)});
    const {state}=await update({project,time,collector:async(id,t)=>{if(id==='weibo')throw Error('blocked');return normalize([{...row,keyword:'<script>& 测试'}],id,t);}});
    const html=await fs.readFile(path.join(project,'ai-zoo/index.html'),'utf8');
-   assert(html.includes('&lt;script&gt;&amp; 测试'));assert(html.includes('观察系统尚未启用'));
+   assert(html.includes('&lt;script&gt;&amp; 测试'));assert(html.includes('观察系统已启用'));
    assert(html.includes('history/2026-10-19/'));assert(html.includes('datetime="2026-10-19T04:30:00Z"'));
    assert(!html.includes('<script>& 测试'));
    await fs.access(path.join(project,'ai-zoo/history/2026-10-20/index.html'));

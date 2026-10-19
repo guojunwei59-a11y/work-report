@@ -1,6 +1,6 @@
 # AI动物园 · AI Zoo 🐾
 
-> 部署权限说明：当前凭据可以发布网页，但 GitHub 拒绝创建 `.github/workflows/ai-zoo.yml`（缺少 OAuth `workflow` 权限），集成写入也返回 403。因此网站可以上线，**定时采集尚未启用**。完整工作流已完成，见 `setup/ai-zoo.yml.txt`，须在 GitHub 网页创建 `.github/workflows/ai-zoo.yml` 并粘贴其内容，或补充现有凭据授权后推送。不要将 `.txt` 文件直接当成工作流。创建时会自动运行，之后也可手动 Run workflow。以下是该工作流启用后的运行方式。
+> 当前状态：热搜 GitHub Actions 已启用，Cloudflare 服务端观察入口已部署。观察地址：https://ai-zoo-observer.workers-bridge.workers.dev/ 。原 Pages 网址继续有效，但直接访问 Pages 的请求不可观察。`setup/ai-zoo.yml.txt` 是初始安装参考，当前运行文件为 `.github/workflows/ai-zoo.yml`。
 
 公开的趣味观察实验。每天抓取公开热搜，把真实关键词放在可读取的静态页面里，等待爬虫主动发现。
 
@@ -40,11 +40,11 @@ node scripts/ai-zoo/update.mjs
 
 `ai-zoo/robots.txt` 是自动生成的说明副本。**robots 协议只读取主机根路径** `https://guojunwei59-a11y.github.io/robots.txt`，不读取项目子目录的 robots.txt；在本仓库增加根 robots.txt 也只会成为 `/work-report/robots.txt`，仍然无效。本项目没有擅自改其他仓库或域名；没有主机根 robots 时通常默认允许抓取。可直接向站长工具提交 `/work-report/ai-zoo/sitemap.xml`。如果以后获得用户主页仓库的明确授权，可在真正的根 robots.txt 添加 Sitemap。无法保证搜索收录或 AI 引用。
 
-## 真实爬虫观察：尚未启用
+## 真实爬虫观察：已启用
 
-当前 Pages 无原始 HTTP 请求日志；前端脚本不能可靠观察大部分爬虫。页面不显示虚构次数或模拟访问。动物图鉴完成，但状态只是“尚未发现”，并不证明爬虫从未访问。
+独立 Worker 记录真实请求并联合官方 IP 清单验证，D1 只保存聚合结果。原 Pages 页面读取统计接口；直接访问 Pages 不会被观察。没有已验证记录时保持“尚未发现”，不添加示例来访。
 
-免费方案研究与具体启用步骤见 [观察系统启用说明](OBSERVATION.md)。现在没有 Cloudflare 账户授权或服务端入口，因此没有部署任何观察后端，也没有公开 API 密钥。
+当前实现与限制见 [观察系统说明](../observer/README.md)，初始方案研究见 [设计记录](OBSERVATION.md)。没有密钥暴露在前端。
 
 ## 许可与参考
 

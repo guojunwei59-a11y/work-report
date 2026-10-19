@@ -1,0 +1,17 @@
+{
+  "name": "ai-zoo-observer",
+  "account_id": "e7390eec0a8f17305f31ec0d540e6df1",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": { "enabled": false },
+  "vars": { "PUBLIC_ORIGIN": "https://ai-zoo-observer.workers-bridge.workers.dev" },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "ai-zoo-observations", "database_id": "e2c0437d-db83-4ba0-b219-3bfc6900520e" }
+  ],
+  "ratelimits": [
+    { "name": "CANDIDATE_LIMIT", "namespace_id": "1920261020", "simple": { "limit": 30, "period": 60 } }
+  ],
+  "triggers": { "crons": ["17 */6 * * *"] }
+}

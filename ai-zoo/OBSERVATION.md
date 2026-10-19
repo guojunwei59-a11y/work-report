@@ -1,6 +1,6 @@
-# 真实 AI 爬虫观察：待授权启用
+# 真实 AI 爬虫观察：已启用
 
-现阶段没有请求日志，不声称任何 AI 已来访。本文件提供部署路线，不表示后端已经实现或通过验证。
+观察入口已启用：https://ai-zoo-observer.workers-bridge.workers.dev/ 。实时状态与实现说明见 [当前观察系统说明](../observer/README.md)。仅经过该入口的请求可记录；没有已验证记录时不声称 AI 已来访。下文保留最初的方案研究与设计步骤，当前状态以新说明和实时统计为准。
 
 ## 选择：Cloudflare Workers Free + D1 Free
 
