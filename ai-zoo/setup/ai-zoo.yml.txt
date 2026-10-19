@@ -1,0 +1,76 @@
+name: AI Zoo · 自动投喂
+
+on:
+  schedule:
+    # UTC -> 北京时间 00:30 / 06:30 / 12:30 / 18:30
+    - cron: '30 4,10,16,22 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/ai-zoo/**'
+      - 'ai-zoo/assets/**'
+      - '.github/workflows/ai-zoo.yml'
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: ai-zoo-update-main
+  cancel-in-progress: false
+
+jobs:
+  feed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify collector and failure isolation
+        run: node --test scripts/ai-zoo/tests.mjs
+      - name: Collect public trends and generate static pages
+        run: node scripts/ai-zoo/update.mjs
+      - name: Save only meaningful changes
+        shell: bash
+        run: |
+          git add -- ai-zoo
+          if git diff --cached --quiet; then
+            echo 'No content or source-status changes; no commit needed.'
+          else
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'chore(ai-zoo): update real trending snapshots'
+            # Refuse to overwrite concurrent human edits. Next run will retry.
+            git push origin HEAD:main
+          fi
+      - name: Request existing branch-based Pages build and verify result
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const {owner,repo}=context.repo;
+            const sha=(await exec.getExecOutput('git',['rev-parse','HEAD'])).stdout.trim();
+            const page=(await github.request('GET /repos/{owner}/{repo}/pages',{owner,repo})).data;
+            if(page.build_type!=='legacy'||page.source.branch!=='main'||page.source.path!=='/'){
+              throw new Error('Pages source changed; refusing to alter existing hosting. Review deployment configuration.');
+            }
+            let latest;
+            try { latest=(await github.request('GET /repos/{owner}/{repo}/pages/builds/latest',{owner,repo})).data; } catch(e){if(e.status!==404)throw e;}
+            if(latest?.commit===sha && latest.status==='built'){
+              core.notice('Existing Pages deployment already matches this commit.');return;
+            }
+            // GITHUB_TOKEN commits do not automatically trigger Pages. Explicitly request a build.
+            await github.request('POST /repos/{owner}/{repo}/pages/builds',{owner,repo});
+            for(let i=0;i<60;i++){
+              await new Promise(resolve=>setTimeout(resolve,10000));
+              const build=(await github.request('GET /repos/{owner}/{repo}/pages/builds/latest',{owner,repo})).data;
+              if(build.commit!==sha)continue;
+              if(build.status==='built'){core.notice(`Published ${page.html_url}ai-zoo/ at ${sha}`);return;}
+              if(build.status==='errored')throw new Error('Pages build failed: '+JSON.stringify(build.error));
+            }
+            throw new Error('Pages build did not confirm this commit within ten minutes. Check Pages build logs.');

@@ -1,0 +1,4 @@
+# Informational copy. Robots only use the origin-root /robots.txt.
+User-agent: *
+Allow: /work-report/ai-zoo/
+Sitemap: https://guojunwei59-a11y.github.io/work-report/ai-zoo/sitemap.xml
