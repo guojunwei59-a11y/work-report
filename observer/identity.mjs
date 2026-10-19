@@ -1,16 +1,16 @@
 // UA is a candidate label only; verification also requires an official IP range.
 export const bots=[
- {type:'GPTBot',company:'openai',kind:'autonomous',url:'https://openai.com/gptbot.json'},
- {type:'OAI-SearchBot',company:'openai',kind:'autonomous',url:'https://openai.com/searchbot.json'},
+ {type:'GPTBot',company:'openai',kind:'training',url:'https://openai.com/gptbot.json'},
+ {type:'OAI-SearchBot',company:'openai',kind:'search',url:'https://openai.com/searchbot.json'},
  {type:'ChatGPT-User',company:'openai',kind:'user_fetch',url:'https://openai.com/chatgpt-user.json'},
- {type:'PerplexityBot',company:'perplexity',kind:'autonomous',url:'https://www.perplexity.ai/perplexitybot.json'},
+ {type:'PerplexityBot',company:'perplexity',kind:'search',url:'https://www.perplexity.ai/perplexitybot.json'},
  {type:'Perplexity-User',company:'perplexity',kind:'user_fetch',url:'https://www.perplexity.ai/perplexity-user.json'},
  {type:'Googlebot',company:'google',kind:'search',url:'https://developers.google.com/static/search/apis/ipranges/googlebot.json'},
- ...['ClaudeBot','Claude-SearchBot','Claude-User'].map(type=>({type,company:'anthropic',kind:type==='Claude-User'?'user_fetch':'autonomous'})),
- {type:'meta-externalagent',company:'meta',kind:'autonomous'},
- {type:'meta-externalfetcher',company:'meta',kind:'user_fetch'},
- {type:'GrokBot',company:'xai',kind:'autonomous'},
- {type:'DeepSeekBot',company:'deepseek',kind:'autonomous'}
+ {type:'bingbot',company:'microsoft',kind:'search',url:'https://www.bing.com/toolbox/bingbot.json'},
+ ...['ClaudeBot','Claude-SearchBot','Claude-User'].map(type=>({type,company:'anthropic',kind:type==='Claude-User'?'user_fetch':type==='ClaudeBot'?'training':'search',url:'https://claude.com/crawling/bots.json'})),
+ ...[['KimiBot','training','kimibot'],['Kimi-SearchBot','search','kimi-searchbot'],['Kimi-User','user_fetch','kimi-user']].map(([type,kind,file])=>({type,company:'kimi',kind,url:`https://www.kimi.ai/policies/${file}.json`})),
+ {type:'meta-externalagent',company:'meta',kind:'training'},
+ {type:'meta-externalfetcher',company:'meta',kind:'user_fetch'}
 ];
 export function candidate(ua){
  const matches=bots.filter(b=>new RegExp('(?:^|[^A-Za-z0-9_-])'+b.type+'(?:[/;\\s)]|$)','i').test(ua));

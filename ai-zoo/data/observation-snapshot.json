@@ -1,0 +1,109 @@
+{
+  "enabled": true,
+  "day": "2026-10-20",
+  "generatedAt": "2026-10-19T23:49:09.425Z",
+  "enabledAt": "2026-10-19T19:21:53.062Z",
+  "entry": "https://ai-zoo-observer.workers-bridge.workers.dev/",
+  "retentionDays": 90,
+  "verifiedTypes": 2,
+  "verifiedRequests": 3,
+  "crawlers": [
+    {
+      "crawler": "ChatGPT-User",
+      "company": "openai",
+      "kind": "user_fetch",
+      "verification": "official-ip-and-ua",
+      "requests": 2,
+      "lastSeen": "2026-10-19T21:26:36.849Z",
+      "category": "A"
+    },
+    {
+      "crawler": "OAI-SearchBot",
+      "company": "openai",
+      "kind": "search",
+      "verification": "official-ip-and-ua",
+      "requests": 1,
+      "lastSeen": "2026-10-19T20:48:05.981Z",
+      "category": "B"
+    }
+  ],
+  "totals": [
+    {
+      "company": "openai",
+      "kind": "search",
+      "requests": 1,
+      "lastSeen": "2026-10-19T20:48:05.981Z"
+    },
+    {
+      "company": "openai",
+      "kind": "user_fetch",
+      "requests": 2,
+      "lastSeen": "2026-10-19T21:26:36.849Z"
+    }
+  ],
+  "activeDays": [
+    {
+      "company": "openai",
+      "days": 1
+    }
+  ],
+  "topPages": [
+    {
+      "path": "/",
+      "requests": 2
+    },
+    {
+      "path": "/robots.txt",
+      "requests": 1
+    }
+  ],
+  "daily": [
+    {
+      "day": "2026-10-20",
+      "crawler": "ChatGPT-User",
+      "kind": "user_fetch",
+      "verification": "official-ip-and-ua",
+      "requests": 2,
+      "category": "A"
+    },
+    {
+      "day": "2026-10-20",
+      "crawler": "OAI-SearchBot",
+      "kind": "search",
+      "verification": "official-ip-and-ua",
+      "requests": 1,
+      "category": "B"
+    }
+  ],
+  "history": [
+    {
+      "crawler": "ChatGPT-User",
+      "company": "openai",
+      "kind": "user_fetch",
+      "verification": "official-ip-and-ua",
+      "path": "/",
+      "requests": 2,
+      "firstSeen": null,
+      "lastSeen": "2026-10-19T21:26:36.849Z",
+      "category": "A"
+    },
+    {
+      "crawler": "OAI-SearchBot",
+      "company": "openai",
+      "kind": "search",
+      "verification": "official-ip-and-ua",
+      "path": "/robots.txt",
+      "requests": 1,
+      "firstSeen": "2026-10-19T20:48:05.981Z",
+      "lastSeen": "2026-10-19T20:48:05.981Z",
+      "category": "B"
+    }
+  ],
+  "comparison": {
+    "baselineAt": "2026-10-19T23:48:21.426Z",
+    "before": 3,
+    "additional": 0,
+    "note": "基线后已记录的增量；不证明由 SEO 引起，也不证明主动发现。"
+  },
+  "firstSeenNote": "首次时间仅在保留期内、且原记录具备首次字段时提供；旧记录缺失不反推。"
+}

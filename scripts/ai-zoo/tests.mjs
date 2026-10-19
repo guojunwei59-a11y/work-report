@@ -29,9 +29,9 @@ test('one failed platform preserves its timestamp; unchanged snapshots do not ch
 test('date archives link to real files; all failures preserve data; retention stays bounded',async()=>{
  const project=await fs.mkdtemp(path.join(os.tmpdir(),'ai-zoo-test-'));
  try{
-   await update({project,time:'2026-07-01T04:30:00Z',collector:async(id,t)=>normalize([row],id,t)});
-   await update({project,time:'2026-10-19T04:30:00Z',collector:async(id,t)=>normalize([row],id,t)});
-   const {state}=await update({project,time,collector:async(id,t)=>{if(id==='weibo')throw Error('blocked');return normalize([{...row,keyword:'<script>& 测试'}],id,t);}});
+   await update({project,snapshotSync:async()=>false,time:'2026-07-01T04:30:00Z',collector:async(id,t)=>normalize([row],id,t)});
+   await update({project,snapshotSync:async()=>false,time:'2026-10-19T04:30:00Z',collector:async(id,t)=>normalize([row],id,t)});
+   const {state}=await update({project,snapshotSync:async()=>false,time,collector:async(id,t)=>{if(id==='weibo')throw Error('blocked');return normalize([{...row,keyword:'<script>& 测试'}],id,t);}});
    const html=await fs.readFile(path.join(project,'ai-zoo/index.html'),'utf8');
    assert(html.includes('&lt;script&gt;&amp; 测试'));assert(html.includes('观察系统已启用'));
    assert(html.includes('history/2026-10-19/'));assert(html.includes('datetime="2026-10-19T04:30:00Z"'));
@@ -39,8 +39,9 @@ test('date archives link to real files; all failures preserve data; retention st
    await fs.access(path.join(project,'ai-zoo/history/2026-10-20/index.html'));
    await assert.rejects(fs.access(path.join(project,'ai-zoo/data/2026-07-01.json')));
    await assert.rejects(fs.access(path.join(project,'ai-zoo/history/2026-07-01/')));
-   const failed=await update({project,time,collector:async()=>{throw Error('offline');}});
+   const failed=await update({project,snapshotSync:async()=>false,time,collector:async()=>{throw Error('offline');}});
    assert.deepEqual(failed.state.platforms.baidu.items,state.platforms.baidu.items);
    assert.equal(failed.succeeded,0);
  }finally{await fs.rm(project,{recursive:true,force:true});}
 });
+

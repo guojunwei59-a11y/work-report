@@ -7,7 +7,14 @@ CREATE TABLE IF NOT EXISTS crawler_counts (
  path TEXT NOT NULL,
  request_count INTEGER NOT NULL DEFAULT 1,
  last_seen_at TEXT NOT NULL,
+ first_seen_at TEXT,
  PRIMARY KEY(day,crawler,verification,path)
+);
+CREATE TABLE IF NOT EXISTS indexnow_pages (
+ url TEXT PRIMARY KEY,
+ lastmod TEXT NOT NULL,
+ status INTEGER NOT NULL,
+ submitted_at TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS official_ranges (
  crawler TEXT PRIMARY KEY,

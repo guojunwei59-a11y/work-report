@@ -3,6 +3,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {collectSource,platforms} from './sources.mjs';
 import {build} from './website.mjs';
+import {syncObservation} from './snapshot.mjs';
 export const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 export const dayOf = time => new Date(new Date(time).getTime()+8*3600000).toISOString().slice(0,10);
 export const previousDay = day => new Date(Date.parse(day+'T12:00:00Z')-86400000).toISOString().slice(0,10);
@@ -24,7 +25,7 @@ export function merge(previous, results, time) {
 }
 async function readJson(file, fallback) {try{return JSON.parse(await fs.readFile(file,'utf8'));}catch(e){if(e.code==='ENOENT')return fallback;throw e;}}
 async function writeJson(file, value) {await fs.mkdir(path.dirname(file),{recursive:true});await fs.writeFile(file,JSON.stringify(value,null,2)+'\n');}
-export async function update({time=new Date().toISOString(),collector=collectSource,project=root}={}) {
+export async function update({time=new Date().toISOString(),collector=collectSource,project=root,snapshotSync=syncObservation}={}) {
   const dir = path.join(project,'ai-zoo/data');
   const previous = await readJson(path.join(dir,'latest.json'),null);
   const results = await Promise.allSettled(Object.keys(platforms).map(id=>collector(id,time)));
@@ -39,6 +40,7 @@ export async function update({time=new Date().toISOString(),collector=collectSou
   if (Object.keys(archive.platforms).length) await writeJson(path.join(dir,`${day}.json`),archive);
   const cutoff=new Date(Date.parse(day+'T00:00:00Z')-89*86400000).toISOString().slice(0,10);
   for(const name of await fs.readdir(dir)) if(/^\d{4}-\d{2}-\d{2}\.json$/.test(name) && name.slice(0,10)<cutoff) await fs.unlink(path.join(dir,name));
+  await snapshotSync(project);
   await build(project,day,state);
   const succeeded=results.filter(x=>x.status==='fulfilled').length;
   if (!succeeded) console.error('::warning::全部平台采集失败，已保留上次成功数据');

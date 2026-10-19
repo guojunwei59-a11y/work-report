@@ -1,4 +1,5 @@
 (async()=>{
+ if(document.querySelector('meta[name="ai-zoo-mode"]')?.content==='static-mirror')return;
  const box=document.querySelector('#youtube-content');if(!box||box.dataset.rendered==='true')return;
  const origin=document.querySelector('meta[name="ai-zoo-observer"]')?.content;
  const add=(tag,value,parent)=>{const e=document.createElement(tag);e.textContent=value;parent.append(e);return e;};

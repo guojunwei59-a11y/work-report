@@ -1,5 +1,7 @@
 import {bots,candidate,identity,parseRanges} from './identity.mjs';
 import {youtubeSnapshot,youtubeHtml,youtubeMessage,youtubeCron} from './youtube.mjs';
+import {category} from '../shared/observation.mjs';
+import {indexNow,discoveryStatus,indexKey} from './discovery.mjs';
 const upstream='https://guojunwei59-a11y.github.io/work-report/ai-zoo/';
 export const cstDay=(now=Date.now())=>new Date(now+28800000).toISOString().slice(0,10);
 const rangeCache=new Map();
@@ -16,7 +18,7 @@ async function ranges(env,bot){
 export async function refreshRanges(env,fetcher=fetch){
  const results=await Promise.allSettled(bots.filter(b=>b.url).map(async b=>{
   let target=b.url,r;
-  const allowed=new Set(b.company==='openai'?['openai.com','www.openai.com']:b.company==='perplexity'?['www.perplexity.ai','www.perplexity.com']:['developers.google.com']);
+  const allowed=new Set([new URL(b.url).hostname,...(b.company==='openai'?['openai.com','www.openai.com']:b.company==='perplexity'?['www.perplexity.ai','www.perplexity.com']:b.company==='kimi'?['www.kimi.ai','kimi.ai','www.kimi.com','kimi.com']:b.company==='anthropic'?['claude.com','www.claude.com']:[])]);
   for(let step=0;step<3;step++){
    r=await fetcher(target,{redirect:'manual',signal:AbortSignal.timeout(15000)});
    if(r.status<300||r.status>=400)break;
@@ -37,25 +39,33 @@ export async function record(request,env,path,now=Date.now()){
  const id=identity(bot,ip,list?.ranges,list?.updated,now);
  // Edge rate limits bound write pressure. Ordinary visitors never enter this branch.
  if(env.CANDIDATE_LIMIT){const limit=await env.CANDIDATE_LIMIT.limit({key:id.verified?'verified-candidates':'suspected-candidates'});if(!limit.success)return;}
- await env.DB.prepare('INSERT INTO crawler_counts(day,crawler,company,kind,verification,path,request_count,last_seen_at) VALUES(?,?,?,?,?,?,1,?) ON CONFLICT(day,crawler,verification,path) DO UPDATE SET request_count=request_count+1,last_seen_at=excluded.last_seen_at')
-  .bind(cstDay(now),id.type,id.verified?id.company:'unknown',id.kind,id.verification,path,new Date(now).toISOString()).run();
+ await env.DB.prepare('INSERT INTO crawler_counts(day,crawler,company,kind,verification,path,request_count,last_seen_at,first_seen_at) VALUES(?,?,?,?,?,?,1,?,?) ON CONFLICT(day,crawler,verification,path) DO UPDATE SET request_count=request_count+1,last_seen_at=excluded.last_seen_at')
+  .bind(cstDay(now),id.type,id.verified?id.company:'unknown',id.kind,id.verification,path,new Date(now).toISOString(),new Date(now).toISOString()).run();
 }
-async function statistics(env){
+export async function statistics(env){
  const day=cstDay(),cutoff=new Date(Date.now()-89*86400000+28800000).toISOString().slice(0,10);
- const [today,totals,days,pages,health,meta]=await env.DB.batch([
+ const [today,totals,days,pages,health,meta,daily,allTypes,baseline]=await env.DB.batch([
   env.DB.prepare('SELECT crawler,company,kind,verification,SUM(request_count) AS requests,MAX(last_seen_at) AS lastSeen FROM crawler_counts WHERE day=? GROUP BY crawler,company,kind,verification').bind(day),
   env.DB.prepare("SELECT company,kind,SUM(request_count) AS requests,MAX(last_seen_at) AS lastSeen FROM crawler_counts WHERE day>=? AND verification='official-ip-and-ua' GROUP BY company,kind").bind(cutoff),
-  env.DB.prepare("SELECT company,COUNT(DISTINCT day) AS days FROM crawler_counts WHERE day>=? AND verification='official-ip-and-ua' AND kind='autonomous' GROUP BY company").bind(new Date(Date.now()-6*86400000+28800000).toISOString().slice(0,10)),
+  env.DB.prepare("SELECT company,COUNT(DISTINCT day) AS days FROM crawler_counts WHERE day>=? AND verification='official-ip-and-ua' AND kind IN ('search','training') GROUP BY company").bind(new Date(Date.now()-6*86400000+28800000).toISOString().slice(0,10)),
   env.DB.prepare("SELECT path,SUM(request_count) AS requests FROM crawler_counts WHERE day=? AND verification='official-ip-and-ua' GROUP BY path ORDER BY requests DESC LIMIT 5").bind(day),
   env.DB.prepare('SELECT crawler,updated_at FROM official_ranges'),
-  env.DB.prepare("SELECT value FROM observer_meta WHERE key='enabled_at'")
+  env.DB.prepare("SELECT value FROM observer_meta WHERE key='enabled_at'"),
+  env.DB.prepare('SELECT day,crawler,kind,verification,SUM(request_count) AS requests FROM crawler_counts WHERE day>=? GROUP BY day,crawler,kind,verification ORDER BY day DESC').bind(cutoff),
+  env.DB.prepare('SELECT crawler,company,kind,verification,path,SUM(request_count) AS requests,CASE WHEN COUNT(first_seen_at)=COUNT(*) THEN MIN(first_seen_at) ELSE NULL END AS firstSeen,MAX(last_seen_at) AS lastSeen FROM crawler_counts WHERE day>=? GROUP BY crawler,company,kind,verification,path').bind(cutoff),
+  env.DB.prepare("SELECT value FROM observer_meta WHERE key='v14_baseline'")
  ]);
  const valid=today.results.filter(x=>x.verification==='official-ip-and-ua');
- return {enabled:true,day,generatedAt:new Date().toISOString(),enabledAt:meta.results[0]?.value||null,entry:env.PUBLIC_ORIGIN+'/',scope:'仅统计经过观察入口的请求；直接访问 GitHub Pages 不可见',retentionDays:90,verifiedTypes:valid.length,verifiedRequests:valid.reduce((s,x)=>s+x.requests,0),crawlers:today.results,totals:totals.results,activeDays:days.results,topPages:pages.results,officialLists:health.results.map(x=>({crawler:x.crawler,updatedAt:new Date(x.updated_at).toISOString(),fresh:Date.now()-x.updated_at<48*3600000})),sampling:'候选爬虫请求受边缘限流，统计为实际记录的请求下限，不是独立访客人数'};
+ const before=baseline.results[0]?JSON.parse(baseline.results[0].value):null;
+ const verified90=totals.results.reduce((n,x)=>n+x.requests,0);
+ return {enabled:true,day,generatedAt:new Date().toISOString(),enabledAt:meta.results[0]?.value||null,entry:env.PUBLIC_ORIGIN+'/',scope:'仅统计经过观察入口的请求；直接访问 GitHub Pages 不可见',retentionDays:90,verifiedTypes:valid.length,verifiedRequests:valid.reduce((s,x)=>s+x.requests,0),crawlers:today.results.map(x=>({...x,category:category(x)})),totals:totals.results,activeDays:days.results,topPages:pages.results,daily:daily.results.map(x=>({...x,category:category(x)})),history:allTypes.results.map(x=>({...x,category:category(x)})),comparison:before&&before.at.slice(0,10)>=cutoff?{baselineAt:before.at,before:before.verified,additional:Math.max(0,verified90-before.verified),note:'基线后已记录的增量；不证明由 SEO 引起，也不证明主动发现。'}:null,firstSeenNote:'首次时间仅在保留期内、且原记录具备首次字段时提供；旧记录缺失不反推。',officialLists:health.results.map(x=>({crawler:x.crawler,updatedAt:new Date(x.updated_at).toISOString(),fresh:Date.now()-x.updated_at<48*3600000})),sampling:'候选爬虫请求受边缘限流，统计为实际记录的请求下限，不是独立访客人数'};
 }
 export default {
  async fetch(request,env,ctx){
   const url=new URL(request.url),origin=env.PUBLIC_ORIGIN;
+  if(url.pathname===`/${indexKey}.txt`)return new Response(indexKey,{headers:{'Content-Type':'text/plain; charset=utf-8'}});
+  if(url.pathname==='/BingSiteAuth.xml'&&env.BING_SITE_VERIFICATION)return new Response(`<?xml version="1.0"?><users><user>${env.BING_SITE_VERIFICATION.replace(/[^A-Za-z0-9]/g,'')}</user></users>`,{headers:{'Content-Type':'application/xml'}});
+  if(url.pathname==='/api/discovery')return Response.json(await discoveryStatus(env),{headers:cors()});
   if(url.pathname==='/api/youtube'){
    if(request.method==='OPTIONS')return new Response(null,{headers:cors()});
    if(request.method!=='GET')return new Response('Method not allowed',{status:405});
@@ -64,7 +74,7 @@ export default {
   }
   if(url.pathname==='/internal/refresh'){
    if(request.method!=='POST'||!env.BOOTSTRAP_TOKEN||request.headers.get('Authorization')!=='Bearer '+env.BOOTSTRAP_TOKEN)return new Response('Not found',{status:404});
-   return Response.json(await refreshRanges(env));
+   return Response.json({ranges:await refreshRanges(env),indexnow:await indexNow(env)});
   }
   if(url.pathname==='/api/observation'){
    if(request.method==='OPTIONS')return new Response(null,{headers:cors()});
@@ -83,7 +93,12 @@ export default {
    if(response.status>=300&&response.status<400){const location=response.headers.get('Location');if(location?.startsWith(upstream))response.headers.set('Location',origin+'/'+location.slice(upstream.length));else response.headers.delete('Location');}
    if(url.pathname==='/sitemap.xml'&&response.ok)response=new Response((await response.text()).replaceAll(upstream,origin+'/'),{headers:{'Content-Type':'application/xml; charset=utf-8'}});
    else if(response.headers.get('Content-Type')?.includes('text/html')){
-    const rewrite=new HTMLRewriter().on('link[rel="canonical"]',{element(el){el.setAttribute('href',origin+url.pathname);}});
+    response.headers.delete('X-Robots-Tag');
+    const rewrite=new HTMLRewriter().on('link[rel="canonical"]',{element(el){el.setAttribute('href',origin+url.pathname);}})
+     .on('meta[name="robots"]',{element(el){el.setAttribute('content','index,follow');}})
+     .on('meta[name="ai-zoo-mode"]',{element(el){el.setAttribute('content','live');}})
+     .on('.mirror-banner',{element(el){el.remove();}})
+     .on('head',{element(el){if(env.GOOGLE_SITE_VERIFICATION)el.append(`<meta name="google-site-verification" content="${env.GOOGLE_SITE_VERIFICATION.replace(/[^A-Za-z0-9_-]/g,'')}">`,{html:true});}});
     if(url.pathname==='/'){
      let html;try{html=youtubeHtml(await youtubeSnapshot(env));}catch(e){html='<p class="muted">'+youtubeMessage(e)+'</p>';}
      rewrite.on('#youtube-content',{element(el){el.setAttribute('data-rendered','true');el.setInnerContent(html,{html:true});}});
@@ -98,6 +113,7 @@ export default {
   ctx.waitUntil((async()=>{
    if(event.cron===youtubeCron){try{await youtubeSnapshot(env,{force:true});}catch{}return;}
    await refreshRanges(env);
+   try{await indexNow(env);}catch{}
    const cutoff=new Date(Date.now()-89*86400000+28800000).toISOString().slice(0,10);
    await env.DB.prepare('DELETE FROM crawler_counts WHERE day<?').bind(cutoff).run();
    await env.DB.prepare('DELETE FROM youtube_cache WHERE updated_at<?').bind(Date.now()-29*86400000).run();
