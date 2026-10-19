@@ -11,6 +11,8 @@
 
 ## 自动投喂
 
+YouTube 美国区热门视频模块已实现，等待服务端 `YOUTUBE_API_KEY` 配置。该区域使用 Cloudflare 定时缓存与服务端 HTML，不把视频元数据写入永久 Git 历史；接入步骤见 [YouTube 配置说明](../observer/YOUTUBE.md)。没有配置密钥时如实显示待配置，不显示示例视频。
+
 2026-10-20 复查：抖音原 web 接口返回空响应，已换用无需登录的公开 `https://www.douyin.com/aweme/v1/hot/search/list/`，实测保存 30 条。微博公开接口仍返回 403，未绕过限制。首页另提供 YouTube 音乐榜、X 趋势和 TikTok 热门标签的外部入口，明确不计入自动采集。YouTube 官方 `videos.list(chart=mostPopular)` 可在配额内使用，但需要 Google Cloud 项目和 API Key，且当前榜单涵盖音乐、电影、游戏，并非旧版全站 Trending。X 官方 API 采用按量计费，未开通；TikTok 公共趋势页在本次请求中仅返回外壳，未获得可验证榜单，研究 API 需要资质审核。没有为凑平台数量而保存虚构数据或将旧的搜索缓存标作当日榜单。
 
 北京时间每日 **00:30、06:30、12:30、18:30**。对应 UTC **16:30、22:30、04:30、10:30**；cron 为 `30 4,10,16,22 * * *`。GitHub 可能延迟或丢弃排队任务，不能保证准点。

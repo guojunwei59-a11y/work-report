@@ -15,3 +15,9 @@ CREATE TABLE IF NOT EXISTS official_ranges (
  updated_at INTEGER NOT NULL
 );
 CREATE TABLE IF NOT EXISTS observer_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS youtube_cache (
+ id TEXT PRIMARY KEY,
+ snapshot_json TEXT,
+ updated_at INTEGER NOT NULL DEFAULT 0,
+ lease_until INTEGER NOT NULL DEFAULT 0
+);

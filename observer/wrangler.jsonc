@@ -13,5 +13,5 @@
   "ratelimits": [
     { "name": "CANDIDATE_LIMIT", "namespace_id": "1920261020", "simple": { "limit": 30, "period": 60 } }
   ],
-  "triggers": { "crons": ["17 */6 * * *"] }
+  "triggers": { "crons": ["17 */6 * * *", "30 4,10,16,22 * * *"] }
 }

@@ -1,4 +1,5 @@
 import {bots,candidate,identity,parseRanges} from './identity.mjs';
+import {youtubeSnapshot,youtubeHtml,youtubeMessage,youtubeCron} from './youtube.mjs';
 const upstream='https://guojunwei59-a11y.github.io/work-report/ai-zoo/';
 export const cstDay=(now=Date.now())=>new Date(now+28800000).toISOString().slice(0,10);
 const rangeCache=new Map();
@@ -55,6 +56,12 @@ async function statistics(env){
 export default {
  async fetch(request,env,ctx){
   const url=new URL(request.url),origin=env.PUBLIC_ORIGIN;
+  if(url.pathname==='/api/youtube'){
+   if(request.method==='OPTIONS')return new Response(null,{headers:cors()});
+   if(request.method!=='GET')return new Response('Method not allowed',{status:405});
+   try{return Response.json(await youtubeSnapshot(env),{headers:{...cors(),'Cache-Control':'public, max-age=300'}});}
+   catch(e){return Response.json({enabled:false,code:e.code||'unavailable',message:youtubeMessage(e)},{status:e.status||503,headers:{...cors(),'Cache-Control':'no-store'}});}
+  }
   if(url.pathname==='/internal/refresh'){
    if(request.method!=='POST'||!env.BOOTSTRAP_TOKEN||request.headers.get('Authorization')!=='Bearer '+env.BOOTSTRAP_TOKEN)return new Response('Not found',{status:404});
    return Response.json(await refreshRanges(env));
@@ -75,16 +82,25 @@ export default {
    response.headers.delete('Set-Cookie');response.headers.set('X-Content-Type-Options','nosniff');
    if(response.status>=300&&response.status<400){const location=response.headers.get('Location');if(location?.startsWith(upstream))response.headers.set('Location',origin+'/'+location.slice(upstream.length));else response.headers.delete('Location');}
    if(url.pathname==='/sitemap.xml'&&response.ok)response=new Response((await response.text()).replaceAll(upstream,origin+'/'),{headers:{'Content-Type':'application/xml; charset=utf-8'}});
-   else if(response.headers.get('Content-Type')?.includes('text/html'))response=new HTMLRewriter().on('link[rel="canonical"]',{element(el){el.setAttribute('href',origin+url.pathname);}}).transform(response);
+   else if(response.headers.get('Content-Type')?.includes('text/html')){
+    const rewrite=new HTMLRewriter().on('link[rel="canonical"]',{element(el){el.setAttribute('href',origin+url.pathname);}});
+    if(url.pathname==='/'){
+     let html;try{html=youtubeHtml(await youtubeSnapshot(env));}catch(e){html='<p class="muted">'+youtubeMessage(e)+'</p>';}
+     rewrite.on('#youtube-content',{element(el){el.setAttribute('data-rendered','true');el.setInnerContent(html,{html:true});}});
+    }
+    response=rewrite.transform(response);
+   }
   }
   if(response.status===200&&request.method==='GET'&&observedPath(url.pathname))ctx.waitUntil(record(request,env,url.pathname).catch(()=>{}));
   return response;
  },
  async scheduled(event,env,ctx){
   ctx.waitUntil((async()=>{
+   if(event.cron===youtubeCron){try{await youtubeSnapshot(env,{force:true});}catch{}return;}
    await refreshRanges(env);
    const cutoff=new Date(Date.now()-89*86400000+28800000).toISOString().slice(0,10);
    await env.DB.prepare('DELETE FROM crawler_counts WHERE day<?').bind(cutoff).run();
+   await env.DB.prepare('DELETE FROM youtube_cache WHERE updated_at<?').bind(Date.now()-29*86400000).run();
   })());
  }
 };
