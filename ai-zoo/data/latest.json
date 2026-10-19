@@ -797,7 +797,8 @@
       ]
     },
     "kuaishou": {
-      "status": "ok",
+      "status": "unavailable",
+      "error": "接口不可用、返回空榜单或结构变化",
       "items": [
         {
           "keyword": "中方强烈抗议高市早苗“拜鬼”",
@@ -1012,5 +1013,5 @@
       ]
     }
   },
-  "updatedAt": "2026-10-19T19:37:39.144Z"
+  "updatedAt": "2026-10-19T19:38:27.729Z"
 }
