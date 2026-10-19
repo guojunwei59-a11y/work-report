@@ -5,7 +5,7 @@ export const endpoints = {
   baidu: 'https://top.baidu.com/board?tab=realtime',
   bilibili: 'https://s.search.bilibili.com/main/hotword?limit=30',
   zhihu: 'https://www.zhihu.com/api/v3/feed/topstory/hot-list-web?limit=20&desktop=true',
-  douyin: 'https://www.douyin.com/aweme/v1/web/hot/search/list/?device_platform=webapp&aid=6383&channel=channel_pc_web&detail_list=1',
+  douyin: 'https://www.douyin.com/aweme/v1/hot/search/list/',
   kuaishou: 'https://www.kuaishou.com/?isHome=1',
 };
 export function parseSource(id, text) {
