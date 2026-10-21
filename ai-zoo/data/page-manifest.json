@@ -1,18 +1,22 @@
 {
   "/": {
-    "hash": "f8221ba9b1f0e254688719374920372d860c288370974f50742724ccd30804e6",
-    "lastmod": "2026-10-21T15:25:27.362Z"
+    "hash": "4b873162ed58ae2793380ea79f70a175d9a3bd0c32d3d0fe1fd2a68ac4aeb6a9",
+    "lastmod": "2026-10-21T20:15:25.678Z"
   },
   "/history/": {
-    "hash": "0d2b281d114feb3c1734a1fa18b3fa17d35cd20c01e69bdc9207e562f7944344",
-    "lastmod": "2026-10-21T09:27:47.396Z"
+    "hash": "2cf0cf6e62d3ca4cb09d59ce1d10465faa9e0ab13686a3dca8d305fc5dbf8da5",
+    "lastmod": "2026-10-21T20:15:25.678Z"
+  },
+  "/history/2026-10-22/": {
+    "hash": "42d37402126b6937545512aa5a8443348b44b8950d9231ef7fe91d5231390b86",
+    "lastmod": "2026-10-21T20:15:25.679Z"
   },
   "/history/2026-10-21/": {
-    "hash": "d11b08ab742e72e9583badf31fdee0cdb77b4b84c3329e41271e9587685d4e2f",
-    "lastmod": "2026-10-21T15:25:27.363Z"
+    "hash": "63ed6994fd7bf0c0ae88625c8794ab502a081280a13f906a0647f4d2af55968c",
+    "lastmod": "2026-10-21T20:15:25.680Z"
   },
   "/history/2026-10-20/": {
-    "hash": "184249a1c2ceee0cd412ccd0c6607d06e4b3b7102e8923163eb19f05e2da3299",
-    "lastmod": "2026-10-21T09:27:47.397Z"
+    "hash": "f3409af34292a6eb086be8fd8eb77fd58b20b72fb07b427bb426e329fdf986b6",
+    "lastmod": "2026-10-21T20:15:25.681Z"
   }
 }
