@@ -1,0 +1,791 @@
+{
+  "date": "2026-10-23",
+  "platforms": {
+    "baidu": {
+      "items": [
+        {
+          "keyword": "西藏那曲市7.0级地震",
+          "platform": "baidu",
+          "rank": 1,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E8%A5%BF%E8%97%8F%E9%82%A3%E6%9B%B2%E5%B8%827.0%E7%BA%A7%E5%9C%B0%E9%9C%87"
+        },
+        {
+          "keyword": "全球70%网站都危险了",
+          "platform": "baidu",
+          "rank": 2,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E5%85%A8%E7%90%8370%25%E7%BD%91%E7%AB%99%E9%83%BD%E5%8D%B1%E9%99%A9%E4%BA%86"
+        },
+        {
+          "keyword": "红军为何总能绝处逢生",
+          "platform": "baidu",
+          "rank": 3,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E7%BA%A2%E5%86%9B%E4%B8%BA%E4%BD%95%E6%80%BB%E8%83%BD%E7%BB%9D%E5%A4%84%E9%80%A2%E7%94%9F"
+        },
+        {
+          "keyword": "国乒男团3比0韩国 亚锦赛4连冠",
+          "platform": "baidu",
+          "rank": 4,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E5%9B%BD%E4%B9%92%E7%94%B7%E5%9B%A23%E6%AF%940%E9%9F%A9%E5%9B%BD+%E4%BA%9A%E9%94%A6%E8%B5%9B4%E8%BF%9E%E5%86%A0"
+        },
+        {
+          "keyword": "李雪健这段无声演绎看哭了",
+          "platform": "baidu",
+          "rank": 5,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E6%9D%8E%E9%9B%AA%E5%81%A5%E8%BF%99%E6%AE%B5%E6%97%A0%E5%A3%B0%E6%BC%94%E7%BB%8E%E7%9C%8B%E5%93%AD%E4%BA%86"
+        },
+        {
+          "keyword": "西藏那曲地震 居民跑到室外避险",
+          "platform": "baidu",
+          "rank": 6,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E8%A5%BF%E8%97%8F%E9%82%A3%E6%9B%B2%E5%9C%B0%E9%9C%87+%E5%B1%85%E6%B0%91%E8%B7%91%E5%88%B0%E5%AE%A4%E5%A4%96%E9%81%BF%E9%99%A9"
+        },
+        {
+          "keyword": "超强台风蔷琵逼近中国",
+          "platform": "baidu",
+          "rank": 7,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E8%B6%85%E5%BC%BA%E5%8F%B0%E9%A3%8E%E8%94%B7%E7%90%B5%E9%80%BC%E8%BF%91%E4%B8%AD%E5%9B%BD"
+        },
+        {
+          "keyword": "张本智和被打0-11惨败",
+          "platform": "baidu",
+          "rank": 8,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E5%BC%A0%E6%9C%AC%E6%99%BA%E5%92%8C%E8%A2%AB%E6%89%930-11%E6%83%A8%E8%B4%A5"
+        },
+        {
+          "keyword": "芯片人才百万年薪一将难求",
+          "platform": "baidu",
+          "rank": 9,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E8%8A%AF%E7%89%87%E4%BA%BA%E6%89%8D%E7%99%BE%E4%B8%87%E5%B9%B4%E8%96%AA%E4%B8%80%E5%B0%86%E9%9A%BE%E6%B1%82"
+        },
+        {
+          "keyword": "女子100天零违章获奖1吨汽油",
+          "platform": "baidu",
+          "rank": 10,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E5%A5%B3%E5%AD%90100%E5%A4%A9%E9%9B%B6%E8%BF%9D%E7%AB%A0%E8%8E%B7%E5%A5%961%E5%90%A8%E6%B1%BD%E6%B2%B9"
+        },
+        {
+          "keyword": "多地辟谣外地患者到高校传播艾滋病",
+          "platform": "baidu",
+          "rank": 11,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E5%A4%9A%E5%9C%B0%E8%BE%9F%E8%B0%A3%E5%A4%96%E5%9C%B0%E6%82%A3%E8%80%85%E5%88%B0%E9%AB%98%E6%A0%A1%E4%BC%A0%E6%92%AD%E8%89%BE%E6%BB%8B%E7%97%85"
+        },
+        {
+          "keyword": "国乒女团2比3日本 获亚锦赛亚军",
+          "platform": "baidu",
+          "rank": 12,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E5%9B%BD%E4%B9%92%E5%A5%B3%E5%9B%A22%E6%AF%943%E6%97%A5%E6%9C%AC+%E8%8E%B7%E4%BA%9A%E9%94%A6%E8%B5%9B%E4%BA%9A%E5%86%9B"
+        },
+        {
+          "keyword": "周笔畅称参加一档节目后被人删好友",
+          "platform": "baidu",
+          "rank": 13,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E5%91%A8%E7%AC%94%E7%95%85%E7%A7%B0%E5%8F%82%E5%8A%A0%E4%B8%80%E6%A1%A3%E8%8A%82%E7%9B%AE%E5%90%8E%E8%A2%AB%E4%BA%BA%E5%88%A0%E5%A5%BD%E5%8F%8B"
+        },
+        {
+          "keyword": "青海玉树4.3级地震",
+          "platform": "baidu",
+          "rank": 14,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E9%9D%92%E6%B5%B7%E7%8E%89%E6%A0%914.3%E7%BA%A7%E5%9C%B0%E9%9C%87"
+        },
+        {
+          "keyword": "地铁站该不该收“超时费”",
+          "platform": "baidu",
+          "rank": 15,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E5%9C%B0%E9%93%81%E7%AB%99%E8%AF%A5%E4%B8%8D%E8%AF%A5%E6%94%B6%E2%80%9C%E8%B6%85%E6%97%B6%E8%B4%B9%E2%80%9D"
+        },
+        {
+          "keyword": "奥迪中国 首位中国籍总裁",
+          "platform": "baidu",
+          "rank": 16,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E5%A5%A5%E8%BF%AA%E4%B8%AD%E5%9B%BD+%E9%A6%96%E4%BD%8D%E4%B8%AD%E5%9B%BD%E7%B1%8D%E6%80%BB%E8%A3%81"
+        },
+        {
+          "keyword": "美股芯片、光通信股深夜跳水",
+          "platform": "baidu",
+          "rank": 17,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E7%BE%8E%E8%82%A1%E8%8A%AF%E7%89%87%E3%80%81%E5%85%89%E9%80%9A%E4%BF%A1%E8%82%A1%E6%B7%B1%E5%A4%9C%E8%B7%B3%E6%B0%B4"
+        },
+        {
+          "keyword": "坠亡男童母亲称部分遗物被其父亲丢弃",
+          "platform": "baidu",
+          "rank": 18,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E5%9D%A0%E4%BA%A1%E7%94%B7%E7%AB%A5%E6%AF%8D%E4%BA%B2%E7%A7%B0%E9%83%A8%E5%88%86%E9%81%97%E7%89%A9%E8%A2%AB%E5%85%B6%E7%88%B6%E4%BA%B2%E4%B8%A2%E5%BC%83"
+        },
+        {
+          "keyword": "曝盛艾敬妈妈疑似涉嫌诈骗",
+          "platform": "baidu",
+          "rank": 19,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E6%9B%9D%E7%9B%9B%E8%89%BE%E6%95%AC%E5%A6%88%E5%A6%88%E7%96%91%E4%BC%BC%E6%B6%89%E5%AB%8C%E8%AF%88%E9%AA%97"
+        },
+        {
+          "keyword": "“双十一”女装模特可能不是人",
+          "platform": "baidu",
+          "rank": 20,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E2%80%9C%E5%8F%8C%E5%8D%81%E4%B8%80%E2%80%9D%E5%A5%B3%E8%A3%85%E6%A8%A1%E7%89%B9%E5%8F%AF%E8%83%BD%E4%B8%8D%E6%98%AF%E4%BA%BA"
+        },
+        {
+          "keyword": "郭雪芙被曝在日遇害身亡 后援会辟谣",
+          "platform": "baidu",
+          "rank": 21,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E9%83%AD%E9%9B%AA%E8%8A%99%E8%A2%AB%E6%9B%9D%E5%9C%A8%E6%97%A5%E9%81%87%E5%AE%B3%E8%BA%AB%E4%BA%A1+%E5%90%8E%E6%8F%B4%E4%BC%9A%E8%BE%9F%E8%B0%A3"
+        },
+        {
+          "keyword": "充电后悄悄留下25元的男孩找到了",
+          "platform": "baidu",
+          "rank": 22,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E5%85%85%E7%94%B5%E5%90%8E%E6%82%84%E6%82%84%E7%95%99%E4%B8%8B25%E5%85%83%E7%9A%84%E7%94%B7%E5%AD%A9%E6%89%BE%E5%88%B0%E4%BA%86"
+        },
+        {
+          "keyword": "道明寺李逍遥唐晶梦幻同框",
+          "platform": "baidu",
+          "rank": 23,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E9%81%93%E6%98%8E%E5%AF%BA%E6%9D%8E%E9%80%8D%E9%81%A5%E5%94%90%E6%99%B6%E6%A2%A6%E5%B9%BB%E5%90%8C%E6%A1%86"
+        },
+        {
+          "keyword": "为防沉迷 红果短剧“自砍摇钱树”",
+          "platform": "baidu",
+          "rank": 24,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E4%B8%BA%E9%98%B2%E6%B2%89%E8%BF%B7+%E7%BA%A2%E6%9E%9C%E7%9F%AD%E5%89%A7%E2%80%9C%E8%87%AA%E7%A0%8D%E6%91%87%E9%92%B1%E6%A0%91%E2%80%9D"
+        },
+        {
+          "keyword": "时速400公里的高铁真要来了吗",
+          "platform": "baidu",
+          "rank": 25,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E6%97%B6%E9%80%9F400%E5%85%AC%E9%87%8C%E7%9A%84%E9%AB%98%E9%93%81%E7%9C%9F%E8%A6%81%E6%9D%A5%E4%BA%86%E5%90%97"
+        },
+        {
+          "keyword": "孙坚 一边拍戏一边还债",
+          "platform": "baidu",
+          "rank": 26,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E5%AD%99%E5%9D%9A+%E4%B8%80%E8%BE%B9%E6%8B%8D%E6%88%8F%E4%B8%80%E8%BE%B9%E8%BF%98%E5%80%BA"
+        },
+        {
+          "keyword": "成本1亿的维秘大秀 靠什么赚钱",
+          "platform": "baidu",
+          "rank": 27,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E6%88%90%E6%9C%AC1%E4%BA%BF%E7%9A%84%E7%BB%B4%E7%A7%98%E5%A4%A7%E7%A7%80+%E9%9D%A0%E4%BB%80%E4%B9%88%E8%B5%9A%E9%92%B1"
+        },
+        {
+          "keyword": "曹骏要开演唱会了",
+          "platform": "baidu",
+          "rank": 28,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E6%9B%B9%E9%AA%8F%E8%A6%81%E5%BC%80%E6%BC%94%E5%94%B1%E4%BC%9A%E4%BA%86"
+        },
+        {
+          "keyword": "陈熠连续2场0-3惨败",
+          "platform": "baidu",
+          "rank": 29,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E9%99%88%E7%86%A0%E8%BF%9E%E7%BB%AD2%E5%9C%BA0-3%E6%83%A8%E8%B4%A5"
+        },
+        {
+          "keyword": "夏林茂被查 北京市委表态",
+          "platform": "baidu",
+          "rank": 30,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.baidu.com/s?wd=%E5%A4%8F%E6%9E%97%E8%8C%82%E8%A2%AB%E6%9F%A5+%E5%8C%97%E4%BA%AC%E5%B8%82%E5%A7%94%E8%A1%A8%E6%80%81"
+        }
+      ]
+    },
+    "bilibili": {
+      "items": [
+        {
+          "keyword": "杭州LGD.NBW战胜南通Hero久竞",
+          "platform": "bilibili",
+          "rank": 1,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E6%9D%AD%E5%B7%9ELGD.NBW%20%E5%8D%97%E9%80%9AHero%E4%B9%85%E7%AB%9E"
+        },
+        {
+          "keyword": "西藏那曲发生7级地震",
+          "platform": "bilibili",
+          "rank": 2,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E8%A5%BF%E8%97%8F%E9%82%A3%E6%9B%B2%E5%8F%91%E7%94%9F7%E7%BA%A7%E5%9C%B0%E9%9C%87"
+        },
+        {
+          "keyword": "中国女团2-3日本女团",
+          "platform": "bilibili",
+          "rank": 3,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E4%B8%AD%E5%9B%BD%E5%A5%B3%E5%9B%A22-3%E6%97%A5%E6%9C%AC%E5%A5%B3%E5%9B%A2"
+        },
+        {
+          "keyword": "英伟达RTX显卡涨幅扩大",
+          "platform": "bilibili",
+          "rank": 4,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E8%8B%B1%E4%BC%9F%E8%BE%BERTX%E6%98%BE%E5%8D%A1%E6%B6%A8%E5%B9%85%E6%89%A9%E5%A4%A7"
+        },
+        {
+          "keyword": "S16应援曲 以风之名",
+          "platform": "bilibili",
+          "rank": 5,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=S16%E5%BA%94%E6%8F%B4%E6%9B%B2%20%E4%BB%A5%E9%A3%8E%E4%B9%8B%E5%90%8D"
+        },
+        {
+          "keyword": "LPL出征前的默契挑战",
+          "platform": "bilibili",
+          "rank": 6,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=LPL%E5%87%BA%E5%BE%81%E5%89%8D%E7%9A%84%E9%BB%98%E5%A5%91%E6%8C%91%E6%88%98"
+        },
+        {
+          "keyword": "NOVA战胜AQ VCT晋升赛",
+          "platform": "bilibili",
+          "rank": 7,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=NOVA%20AQ"
+        },
+        {
+          "keyword": "漫威新剧幻视任务好看吗",
+          "platform": "bilibili",
+          "rank": 8,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E6%BC%AB%E5%A8%81%E6%96%B0%E5%89%A7%E5%B9%BB%E8%A7%86%E4%BB%BB%E5%8A%A1%E5%A5%BD%E7%9C%8B%E5%90%97"
+        },
+        {
+          "keyword": "时光代理人第三季上部完结",
+          "platform": "bilibili",
+          "rank": 9,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E6%97%B6%E5%85%89%E4%BB%A3%E7%90%86%E4%BA%BA"
+        },
+        {
+          "keyword": "谭乔回应二仙桥大爷又被拦下",
+          "platform": "bilibili",
+          "rank": 10,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E8%B0%AD%E4%B9%94%E5%9B%9E%E5%BA%94%E4%BA%8C%E4%BB%99%E6%A1%A5%E5%A4%A7%E7%88%B7%E5%8F%88%E8%A2%AB%E6%8B%A6%E4%B8%8B"
+        },
+        {
+          "keyword": "影之刃零最终预告",
+          "platform": "bilibili",
+          "rank": 11,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E5%BD%B1%E4%B9%8B%E5%88%83%E9%9B%B6%E6%9C%80%E7%BB%88%E9%A2%84%E5%91%8A"
+        },
+        {
+          "keyword": "DeepSeek完成1000亿融资",
+          "platform": "bilibili",
+          "rank": 12,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=DeepSeek%E5%AE%8C%E6%88%901000%E4%BA%BF%E8%9E%8D%E8%B5%84"
+        },
+        {
+          "keyword": "食贫道和大漠叔叔聊柬埔寨电诈",
+          "platform": "bilibili",
+          "rank": 13,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E9%A3%9F%E8%B4%AB%E9%81%93%E5%92%8C%E5%A4%A7%E6%BC%A0%E5%8F%94%E5%8F%94%E8%81%8A%E6%9F%AC%E5%9F%94%E5%AF%A8%E7%94%B5%E8%AF%88"
+        },
+        {
+          "keyword": "热梗是否会对中文表达造成负面影响",
+          "platform": "bilibili",
+          "rank": 14,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E7%83%AD%E6%A2%97%E6%98%AF%E5%90%A6%E4%BC%9A%E5%AF%B9%E4%B8%AD%E6%96%87%E8%A1%A8%E8%BE%BE%E9%80%A0%E6%88%90%E8%B4%9F%E9%9D%A2%E5%BD%B1%E5%93%8D"
+        },
+        {
+          "keyword": "长征胜利90周年电视文艺晚会",
+          "platform": "bilibili",
+          "rank": 15,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E9%95%BF%E5%BE%81%E8%83%9C%E5%88%A990%E5%91%A8%E5%B9%B4%E7%94%B5%E8%A7%86%E6%96%87%E8%89%BA%E6%99%9A%E4%BC%9A"
+        },
+        {
+          "keyword": "如何评价字母哥热火首秀35分",
+          "platform": "bilibili",
+          "rank": 16,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E5%A6%82%E4%BD%95%E8%AF%84%E4%BB%B7%E5%AD%97%E6%AF%8D%E5%93%A5%E7%83%AD%E7%81%AB%E9%A6%96%E7%A7%8035%E5%88%86"
+        },
+        {
+          "keyword": "刘晓艳问到底谁拍的",
+          "platform": "bilibili",
+          "rank": 17,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E5%88%98%E6%99%93%E8%89%B3%E9%97%AE%E5%88%B0%E5%BA%95%E8%B0%81%E6%8B%8D%E7%9A%84"
+        },
+        {
+          "keyword": "爱德华兹揭幕战45分比肩乔丹张伯伦",
+          "platform": "bilibili",
+          "rank": 18,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E7%88%B1%E5%BE%B7%E5%8D%8E%E5%85%B9%E6%8F%AD%E5%B9%95%E6%88%9845%E5%88%86%E6%AF%94%E8%82%A9%E4%B9%94%E4%B8%B9"
+        },
+        {
+          "keyword": "日食记中国喜宴上新丹东故事",
+          "platform": "bilibili",
+          "rank": 19,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E6%97%A5%E9%A3%9F%E8%AE%B0%E4%B8%AD%E5%9B%BD%E5%96%9C%E5%AE%B4%E4%B8%8A%E6%96%B0%E4%B8%B9%E4%B8%9C%E6%95%85%E4%BA%8B"
+        },
+        {
+          "keyword": "时尚芭莎乐子大赏",
+          "platform": "bilibili",
+          "rank": 20,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E6%97%B6%E5%B0%9A%E8%8A%AD%E8%8E%8E%E4%B9%90%E5%AD%90%E5%A4%A7%E8%B5%8F"
+        },
+        {
+          "keyword": "影视飓风iPhone Duo深度评测",
+          "platform": "bilibili",
+          "rank": 21,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E5%BD%B1%E8%A7%86%E9%A3%93%E9%A3%8EiPhone%20Duo%E6%B7%B1%E5%BA%A6%E8%AF%84%E6%B5%8B"
+        },
+        {
+          "keyword": "迪迦领衔平成三杰激情演唱",
+          "platform": "bilibili",
+          "rank": 22,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E8%BF%AA%E8%BF%A6%E9%A2%86%E8%A1%94%E5%B9%B3%E6%88%90%E4%B8%89%E6%9D%B0%E6%BF%80%E6%83%85%E6%BC%94%E5%94%B1"
+        },
+        {
+          "keyword": "90位仪仗兵铿锵正步致敬长征",
+          "platform": "bilibili",
+          "rank": 23,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=90%E4%BD%8D%E4%BB%AA%E4%BB%97%E5%85%B5%E9%93%BF%E9%94%B5%E6%AD%A3%E6%AD%A5%E8%87%B4%E6%95%AC%E9%95%BF%E5%BE%81"
+        },
+        {
+          "keyword": "用寂静岭画风打开周处除三害",
+          "platform": "bilibili",
+          "rank": 24,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E7%94%A8%E5%AF%82%E9%9D%99%E5%B2%AD%E7%94%BB%E9%A3%8E%E6%89%93%E5%BC%80%E5%91%A8%E5%A4%84%E9%99%A4%E4%B8%89%E5%AE%B3"
+        },
+        {
+          "keyword": "鸣潮锁暝角色养成攻略",
+          "platform": "bilibili",
+          "rank": 25,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E9%B8%A3%E6%BD%AE%E9%94%81%E6%9A%9D%E8%A7%92%E8%89%B2%E5%85%BB%E6%88%90%E6%94%BB%E7%95%A5"
+        },
+        {
+          "keyword": "海克斯大乱斗音乐派对",
+          "platform": "bilibili",
+          "rank": 26,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E6%B5%B7%E5%85%8B%E6%96%AF%E5%A4%A7%E4%B9%B1%E6%96%97%E9%9F%B3%E4%B9%90%E6%B4%BE%E5%AF%B9"
+        },
+        {
+          "keyword": "LOL为什么能走到S16",
+          "platform": "bilibili",
+          "rank": 27,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=LOL%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E8%B5%B0%E5%88%B0S16"
+        },
+        {
+          "keyword": "何同学iPhone Duo首发体验",
+          "platform": "bilibili",
+          "rank": 28,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E4%BD%95%E5%90%8C%E5%AD%A6iPhone%20Duo%E9%A6%96%E5%8F%91%E4%BD%93%E9%AA%8C"
+        },
+        {
+          "keyword": "用iPhone Duo的前夜",
+          "platform": "bilibili",
+          "rank": 29,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E7%94%A8iPhone%20Duo%E7%9A%84%E5%89%8D%E5%A4%9C"
+        },
+        {
+          "keyword": "赛博朋克2077边缘行者2版本更新",
+          "platform": "bilibili",
+          "rank": 30,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://search.bilibili.com/all?keyword=%E8%B5%9B%E5%8D%9A%E6%9C%8B%E5%85%8B2077%E8%BE%B9%E7%BC%98%E8%A1%8C%E8%80%852%E7%89%88%E6%9C%AC%E6%9B%B4%E6%96%B0"
+        }
+      ]
+    },
+    "zhihu": {
+      "items": [
+        {
+          "keyword": "留美在读女博士答辩失利,向实验室同门咖啡机投毒「丙烯酰胺」,如何看待这一事件?",
+          "platform": "zhihu",
+          "rank": 1,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/2096228188099540232"
+        },
+        {
+          "keyword": "如何评价 SemiAnalysis 认为 DeepSeek 与华为已形成共生关系?",
+          "platform": "zhihu",
+          "rank": 2,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/2096603053763846842"
+        },
+        {
+          "keyword": "乒乓亚锦赛女团决赛,中国队 2-3 不敌日本获女团亚军,如何评价本场比赛?",
+          "platform": "zhihu",
+          "rank": 3,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/2096725438974224368"
+        },
+        {
+          "keyword": "iPhone Duo 测评出炉,折叠 3000 次后,折痕明显加深,高负载下发热明显,还有哪些问题值得关注?",
+          "platform": "zhihu",
+          "rank": 4,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/2096555342171563789"
+        },
+        {
+          "keyword": "女子离婚后发现前夫婚内继承 400 多万房款,起诉要求分割这笔钱财,法院判决支持,如何从法律角度解读?",
+          "platform": "zhihu",
+          "rank": 5,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/2096547342124172821"
+        },
+        {
+          "keyword": "中国拟出台的「AI 出口禁令」会影响使用 AI 产品和中企海外业务吗?将对中美 AI 竞争有何影响?",
+          "platform": "zhihu",
+          "rank": 6,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/2096230307561037909"
+        },
+        {
+          "keyword": "中国古代人民为什么不用煤炭当燃料呢?",
+          "platform": "zhihu",
+          "rank": 7,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/331837590"
+        },
+        {
+          "keyword": "西藏那曲市巴青县发生 7.0 级地震,当地目前具体情况如何?你那边有震感吗?",
+          "platform": "zhihu",
+          "rank": 8,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/2096734873637445705"
+        },
+        {
+          "keyword": "如何看待 HLE 以「未带多余队服婉拒 TES 交换队服请求」转头 iG 与 Guma 交换成功?",
+          "platform": "zhihu",
+          "rank": 9,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/2096626213141705315"
+        },
+        {
+          "keyword": "如何评价宇树发布全新机器人「H2-X 功夫传奇 守护」,宣称能徒手抬车、勇斗歹徒?在实际生活中会用在哪?",
+          "platform": "zhihu",
+          "rank": 10,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/2096327185309160809"
+        },
+        {
+          "keyword": "乒乓球亚锦赛男团决赛,中国 3-0 韩国,队史第 26 次夺冠,如何评价本场比赛?",
+          "platform": "zhihu",
+          "rank": 11,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/2096757965445410980"
+        },
+        {
+          "keyword": "你知道的最冷最冷的冷知识是啥?",
+          "platform": "zhihu",
+          "rank": 12,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/1917673665325147958"
+        },
+        {
+          "keyword": "红果短剧日活超「爱优腾芒」四家总和,原因有哪些?",
+          "platform": "zhihu",
+          "rank": 13,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/2087882162238382615"
+        },
+        {
+          "keyword": "如何看待 10 月 21 日前后 nodejs PHP Oracle Chrome Linux 都爆出超高危漏洞?",
+          "platform": "zhihu",
+          "rank": 14,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/2096392948342579875"
+        },
+        {
+          "keyword": "儿子逼父母贷款替其还债被拒,欲断绝父子关系被父亲打致轻伤二级,如何理解法院判父亲免予刑事处罚?",
+          "platform": "zhihu",
+          "rank": 15,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/2096553146264674983"
+        },
+        {
+          "keyword": "日本关键稀土钇储备将耗尽,求助美国敦促中方放宽管制,稀土将耗尽一事将对日方产生多大影响?",
+          "platform": "zhihu",
+          "rank": 16,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/2096043493517013110"
+        },
+        {
+          "keyword": "如何评价英雄联盟 S16 全球总决赛入围赛因阴间时间,解说及二路主播集体加班播到「神志不清」?",
+          "platform": "zhihu",
+          "rank": 17,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/2095377732439912769"
+        },
+        {
+          "keyword": "曝某明星长期借不到高定,自费购买礼服后引该品牌 PR 暴怒,可能会是谁?为啥自费购买也会引起高奢品牌不满?",
+          "platform": "zhihu",
+          "rank": 18,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/2096378566657012341"
+        },
+        {
+          "keyword": "女子地铁站内看书 5 个小时被扣 15 元,怎么看待地铁超时收费?其中读书空间等消费场景的设置合理吗?",
+          "platform": "zhihu",
+          "rank": 19,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/2096527240208938063"
+        },
+        {
+          "keyword": "医生说现在的鸡都是快速养殖,激素多,吃了对孩子身体不好,是这样吗?",
+          "platform": "zhihu",
+          "rank": 20,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.zhihu.com/question/694420968"
+        }
+      ]
+    },
+    "douyin": {
+      "items": [
+        {
+          "keyword": "台风“蔷琵”或转向北上",
+          "platform": "douyin",
+          "rank": 1,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2707617"
+        },
+        {
+          "keyword": "西藏那曲发生7级地震",
+          "platform": "douyin",
+          "rank": 2,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2709008"
+        },
+        {
+          "keyword": "全国秋粮大面积收获进行时",
+          "platform": "douyin",
+          "rank": 3,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2708838"
+        },
+        {
+          "keyword": "乡村里的拼豆店也有存在的意义",
+          "platform": "douyin",
+          "rank": 4,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2705591"
+        },
+        {
+          "keyword": "亚锦赛决赛国乒男团vs韩国",
+          "platform": "douyin",
+          "rank": 5,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2708708"
+        },
+        {
+          "keyword": "台风蔷琵实时路径",
+          "platform": "douyin",
+          "rank": 6,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2708373"
+        },
+        {
+          "keyword": "亚锦赛国乒女团决赛不敌日本",
+          "platform": "douyin",
+          "rank": 7,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2708670"
+        },
+        {
+          "keyword": "广东东阳光96:78浙江广厦",
+          "platform": "douyin",
+          "rank": 8,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2708899"
+        },
+        {
+          "keyword": "黄海南部进行实弹射击意味着什么",
+          "platform": "douyin",
+          "rank": 9,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2707396"
+        },
+        {
+          "keyword": "这首过渡期实在是太痛了",
+          "platform": "douyin",
+          "rank": 10,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2708363"
+        },
+        {
+          "keyword": "人民日报评老师被家长无理举报",
+          "platform": "douyin",
+          "rank": 11,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2708503"
+        },
+        {
+          "keyword": "俄称日美军演威胁亚太稳定安全",
+          "platform": "douyin",
+          "rank": 12,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2707393"
+        },
+        {
+          "keyword": "小城良方病人没钱不愿意治病",
+          "platform": "douyin",
+          "rank": 13,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2707198"
+        },
+        {
+          "keyword": "在冬天来之前先唱一首iceman",
+          "platform": "douyin",
+          "rank": 14,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2707608"
+        },
+        {
+          "keyword": "KDA神之八秒挑战",
+          "platform": "douyin",
+          "rank": 15,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2707150"
+        },
+        {
+          "keyword": "offer8医学生季开播",
+          "platform": "douyin",
+          "rank": 16,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2706329"
+        },
+        {
+          "keyword": "2026KPL淘汰赛抽签结果出炉",
+          "platform": "douyin",
+          "rank": 17,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2708974"
+        },
+        {
+          "keyword": "冷空气袭来 可能最近要变天了",
+          "platform": "douyin",
+          "rank": 18,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2708862"
+        },
+        {
+          "keyword": "嫁金钗全员团建来了",
+          "platform": "douyin",
+          "rank": 19,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2706783"
+        },
+        {
+          "keyword": "媒体评樊振东发文怒斥偷拍",
+          "platform": "douyin",
+          "rank": 20,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2707823"
+        },
+        {
+          "keyword": "中国体操女团世锦赛夺冠",
+          "platform": "douyin",
+          "rank": 21,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2707295"
+        },
+        {
+          "keyword": "曝勇士启动波尔津吉斯交易",
+          "platform": "douyin",
+          "rank": 22,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2707317"
+        },
+        {
+          "keyword": "魏娆认亲差一步美满",
+          "platform": "douyin",
+          "rank": 23,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2707674"
+        },
+        {
+          "keyword": "光遇珍珠季上线",
+          "platform": "douyin",
+          "rank": 24,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2708755"
+        },
+        {
+          "keyword": "黑猫喊你进入喝大水时代",
+          "platform": "douyin",
+          "rank": 25,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2708007"
+        },
+        {
+          "keyword": "青川仁义桃桃又合体了",
+          "platform": "douyin",
+          "rank": 26,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2708789"
+        },
+        {
+          "keyword": "当我得知AG无缘年总淘汰赛",
+          "platform": "douyin",
+          "rank": 27,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2708086"
+        },
+        {
+          "keyword": "拆最爱我的星座测试盲盒",
+          "platform": "douyin",
+          "rank": 28,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2707811"
+        },
+        {
+          "keyword": "不好意思我先官宣了",
+          "platform": "douyin",
+          "rank": 29,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2707809"
+        },
+        {
+          "keyword": "随时随地吃个火锅暖暖",
+          "platform": "douyin",
+          "rank": 30,
+          "collectedAt": "2026-10-22T20:13:15.773Z",
+          "url": "https://www.douyin.com/hot/2708037"
+        }
+      ]
+    }
+  }
+}

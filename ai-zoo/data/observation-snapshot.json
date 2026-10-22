@@ -1,23 +1,13 @@
 {
   "enabled": true,
-  "day": "2026-10-22",
-  "generatedAt": "2026-10-22T15:25:01.810Z",
+  "day": "2026-10-23",
+  "generatedAt": "2026-10-22T20:13:27.007Z",
   "enabledAt": "2026-10-19T19:21:53.062Z",
   "entry": "https://ai-zoo-observer.workers-bridge.workers.dev/",
   "retentionDays": 90,
-  "verifiedTypes": 1,
-  "verifiedRequests": 2,
-  "crawlers": [
-    {
-      "crawler": "OAI-SearchBot",
-      "company": "openai",
-      "kind": "search",
-      "verification": "official-ip-and-ua",
-      "requests": 2,
-      "lastSeen": "2026-10-22T12:49:29.661Z",
-      "category": "B"
-    }
-  ],
+  "verifiedTypes": 0,
+  "verifiedRequests": 0,
+  "crawlers": [],
   "totals": [
     {
       "company": "openai",
@@ -38,12 +28,7 @@
       "days": 3
     }
   ],
-  "topPages": [
-    {
-      "path": "/robots.txt",
-      "requests": 2
-    }
-  ],
+  "topPages": [],
   "daily": [
     {
       "day": "2026-10-22",
