@@ -1,30 +1,34 @@
 {
   "/": {
-    "hash": "d46e52accb2b6864cb58a17d75468239c15e708ce7652c3a22fa114944b6f041",
-    "lastmod": "2026-10-24T08:58:38.186Z"
+    "hash": "f6ae8be764b5d8a6f9bc69728b5e915e9b9198e55c2f542556152d585fcc6b83",
+    "lastmod": "2026-10-24T18:52:32.744Z"
   },
   "/history/": {
-    "hash": "c7e0feb7407db743018ce727dae8aec0378bf5f34879158ab8da51d6fc5061a3",
-    "lastmod": "2026-10-24T00:51:05.080Z"
+    "hash": "2b0304317840916e06edaebd38d92ba06c511a3e8e6f2480185b73b618f08e77",
+    "lastmod": "2026-10-24T18:52:32.744Z"
+  },
+  "/history/2026-10-25/": {
+    "hash": "ad76069a74653e933de408a6d2ee8ec65f5a190c5c66734205c4bf8936fc8e8b",
+    "lastmod": "2026-10-24T18:52:32.745Z"
   },
   "/history/2026-10-24/": {
-    "hash": "8af6f01748456445c940bc18957b7f1b00b52b5a1fc0ca89ae488b20a5462129",
-    "lastmod": "2026-10-24T08:58:38.186Z"
+    "hash": "ad33ad0d1cdb2da9f9817a2a9af30dc54b0de4d68d6e0d6e4e70adbf7ca8d2ce",
+    "lastmod": "2026-10-24T18:52:32.745Z"
   },
   "/history/2026-10-23/": {
-    "hash": "cd86b7b028fd2069ccad1b67ad9b879b08292fa5a9ff2e63aa85a8bd1593d6e5",
-    "lastmod": "2026-10-24T00:51:05.081Z"
+    "hash": "d603cac0c5f618cf1efa54c89e6872439eb80b23dfe98216612b867ec1ef6ace",
+    "lastmod": "2026-10-24T18:52:32.745Z"
   },
   "/history/2026-10-22/": {
-    "hash": "9c056e683c2c6a28f3ab5c092455984695732c0ee93636dcf6fc2ee983361289",
-    "lastmod": "2026-10-24T00:51:05.082Z"
+    "hash": "7c8d13903ea79f1a4b873b533423b1a962bbeb948bf8d89c1f109b80e68355be",
+    "lastmod": "2026-10-24T18:52:32.746Z"
   },
   "/history/2026-10-21/": {
-    "hash": "16664d4f4018e91b0326b07f6a2795597c84c25f36465e1421e05680fa1302e2",
-    "lastmod": "2026-10-24T00:51:05.083Z"
+    "hash": "634c7159e35cadcda88b5fc8a3a17689468509389d4be84d839488ff64eb240c",
+    "lastmod": "2026-10-24T18:52:32.746Z"
   },
   "/history/2026-10-20/": {
-    "hash": "ac0999416b096cdb5143ebbbda769e63e5daa8e450696d141198549451b7e518",
-    "lastmod": "2026-10-24T00:51:05.083Z"
+    "hash": "4d232d9406306004e5229d96d572db8dbd190346e7aafab7d071894b34edb2df",
+    "lastmod": "2026-10-24T18:52:32.747Z"
   }
 }
