@@ -1,58 +1,62 @@
 {
   "/": {
-    "hash": "fcdf82d3255d667c2b34b0a8d1bf04b3b5dc73d5e409c0b6099118aa7720982f",
-    "lastmod": "2026-10-31T15:49:21.746Z"
+    "hash": "c22c87ac336086f3899a1a7ec6d33a64cb277ec64deab8bb831881db3b8ebb31",
+    "lastmod": "2026-10-31T20:07:57.816Z"
   },
   "/history/": {
-    "hash": "3dd04e2b2009368a998e519a717bc9214c7e3c313b9ce03cd9b92b90e23d74b0",
-    "lastmod": "2026-10-31T10:29:00.935Z"
+    "hash": "54f6d9236f5cdc2eac514b5a24fb6854a9fe5f3ac618b2536664590d72e47ab6",
+    "lastmod": "2026-10-31T20:07:57.816Z"
+  },
+  "/history/2026-11-01/": {
+    "hash": "531ef450cbd39452f8677cac9d55b43619789d4908bdd0dc5f3c4ef9a50481b0",
+    "lastmod": "2026-10-31T20:07:57.816Z"
   },
   "/history/2026-10-31/": {
-    "hash": "5914753bafc989fe7449ca1e5664140df9c601d61fb8cef8b5f21e775661a91e",
-    "lastmod": "2026-10-31T15:49:21.746Z"
+    "hash": "bda74bbc0c8ba4dceb045ed2b869e7bae1784ad38828314203c8a27309711a6b",
+    "lastmod": "2026-10-31T20:07:57.817Z"
   },
   "/history/2026-10-30/": {
-    "hash": "7da180a78d778cc28d3176b90794c7ba579d372b0efeeacd212ac2bcc15b6394",
-    "lastmod": "2026-10-31T10:29:00.935Z"
+    "hash": "e7e0baf766e03a4597498f67255fc07934ee9c859db173f4554b796136cdf6de",
+    "lastmod": "2026-10-31T20:07:57.817Z"
   },
   "/history/2026-10-29/": {
-    "hash": "d7af38e39a6549d06dd0803ab5098c8611412b282817c640672d291c57a9fb9e",
-    "lastmod": "2026-10-31T10:29:00.935Z"
+    "hash": "2f20cac4d143912bc48d4593c10669a957578a8ae38b5335127a6f13153f72f2",
+    "lastmod": "2026-10-31T20:07:57.817Z"
   },
   "/history/2026-10-28/": {
-    "hash": "4001cc0636580cca61f8607a471fa1f5c34fc467b03bbb8beaee1a98f947bdd7",
-    "lastmod": "2026-10-31T10:29:00.936Z"
+    "hash": "6a8b2546de7068412a03c8da80d8fe9a12b421855842b9bf147657061bcd28d7",
+    "lastmod": "2026-10-31T20:07:57.818Z"
   },
   "/history/2026-10-27/": {
-    "hash": "1ee9fc0152fe5fc0522129dd9873c8073a150ed83757177e198acb0066356a06",
-    "lastmod": "2026-10-31T10:29:00.936Z"
+    "hash": "84180b403aefa4be577ebf1391733b3ccfdbd7ce4a97ad8f7bb1f148469778e2",
+    "lastmod": "2026-10-31T20:07:57.818Z"
   },
   "/history/2026-10-26/": {
-    "hash": "2d2f292b683d533fe9e081891b7ac17bf15c0abfbb5aaef1c78507b02aa98c94",
-    "lastmod": "2026-10-31T10:29:00.936Z"
+    "hash": "b6ecd0316878bc0abdae33cbd7bb27f9146490cfad52cf43e0445b5c860b73e8",
+    "lastmod": "2026-10-31T20:07:57.819Z"
   },
   "/history/2026-10-25/": {
-    "hash": "19e5bb34440667316192b37147ec053f203fac9e8eece07626623ebb194b8f53",
-    "lastmod": "2026-10-31T10:29:00.936Z"
+    "hash": "a88437f06db77e8e90f62d2c4e74fa60ce9e475a2a3a867ed002952743215c6a",
+    "lastmod": "2026-10-31T20:07:57.819Z"
   },
   "/history/2026-10-24/": {
-    "hash": "f4ef7d1cbf1b4ea2ef1e8a7b2eb862b0c49b952283573090960ffde02f89dca4",
-    "lastmod": "2026-10-31T10:29:00.937Z"
+    "hash": "20a2d5ddc28cf38e4196c829fa70817d4f4385bd5c1c83d3338e6b651a721629",
+    "lastmod": "2026-10-31T20:07:57.820Z"
   },
   "/history/2026-10-23/": {
-    "hash": "ee87d0e0c8d371252b06157fac01b4203527c571ded1c5d390b722bb32084a48",
-    "lastmod": "2026-10-31T10:29:00.937Z"
+    "hash": "95727ae09f0063df92bc41a484467598c572fda88868745f9f5c2a5f24ac5e9a",
+    "lastmod": "2026-10-31T20:07:57.820Z"
   },
   "/history/2026-10-22/": {
-    "hash": "3df4d728575f3aa922afc65a0c4383bf7bd4dedfddee2f3e293d1e5b0296e04e",
-    "lastmod": "2026-10-31T10:29:00.937Z"
+    "hash": "13179d027102f79aa78a900a10e8f348dd28311616c3490ab5693de76fdb6373",
+    "lastmod": "2026-10-31T20:07:57.822Z"
   },
   "/history/2026-10-21/": {
-    "hash": "3b4dff9176e993d250a51dca86234aa22148f27cbb360de8d991779e9aaddba0",
-    "lastmod": "2026-10-31T10:29:00.937Z"
+    "hash": "017aa355bfb4f2d94705b7bc90b1cac8c9e68d2498b991ead62fd63fdb5efc03",
+    "lastmod": "2026-10-31T20:07:57.822Z"
   },
   "/history/2026-10-20/": {
-    "hash": "3f7e7137868087e0cd7a127c413785900e5e863c49788b76281dd9db4d40b5b6",
-    "lastmod": "2026-10-31T10:29:00.938Z"
+    "hash": "5c5a75e7a7308841e20a4d3663d7b5c9de041ba7bc81c86d223c03c13b4e9391",
+    "lastmod": "2026-10-31T20:07:57.822Z"
   }
 }
