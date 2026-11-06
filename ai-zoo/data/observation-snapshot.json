@@ -1,7 +1,7 @@
 {
   "enabled": true,
-  "day": "2026-11-06",
-  "generatedAt": "2026-11-06T12:17:24.359Z",
+  "day": "2026-11-07",
+  "generatedAt": "2026-11-06T21:39:49.032Z",
   "enabledAt": "2026-10-19T19:21:53.062Z",
   "entry": "https://ai-zoo-observer.workers-bridge.workers.dev/",
   "retentionDays": 90,
@@ -14,7 +14,7 @@
       "kind": "search",
       "verification": "official-ip-and-ua",
       "requests": 1,
-      "lastSeen": "2026-11-06T04:57:54.783Z",
+      "lastSeen": "2026-11-06T20:58:16.986Z",
       "category": "B"
     }
   ],
@@ -22,8 +22,8 @@
     {
       "company": "openai",
       "kind": "search",
-      "requests": 27,
-      "lastSeen": "2026-11-06T04:57:54.783Z"
+      "requests": 28,
+      "lastSeen": "2026-11-06T20:58:16.986Z"
     },
     {
       "company": "openai",
@@ -45,6 +45,14 @@
     }
   ],
   "daily": [
+    {
+      "day": "2026-11-07",
+      "crawler": "OAI-SearchBot",
+      "kind": "search",
+      "verification": "official-ip-and-ua",
+      "requests": 1,
+      "category": "B"
+    },
     {
       "day": "2026-11-06",
       "crawler": "OAI-SearchBot",
@@ -216,16 +224,16 @@
       "kind": "search",
       "verification": "official-ip-and-ua",
       "path": "/robots.txt",
-      "requests": 27,
+      "requests": 28,
       "firstSeen": "2026-10-19T20:48:05.981Z",
-      "lastSeen": "2026-11-06T04:57:54.783Z",
+      "lastSeen": "2026-11-06T20:58:16.986Z",
       "category": "B"
     }
   ],
   "comparison": {
     "baselineAt": "2026-10-19T23:48:21.426Z",
     "before": 3,
-    "additional": 26,
+    "additional": 27,
     "note": "基线后已记录的增量；不证明由 SEO 引起，也不证明主动发现。"
   },
   "firstSeenNote": "首次时间仅在保留期内、且原记录具备首次字段时提供；旧记录缺失不反推。"
