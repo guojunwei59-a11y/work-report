@@ -1,20 +1,20 @@
 {
   "enabled": true,
   "day": "2026-11-23",
-  "generatedAt": "2026-11-22T21:54:55.103Z",
+  "generatedAt": "2026-11-23T15:02:19.762Z",
   "enabledAt": "2026-10-19T19:21:53.062Z",
   "entry": "https://ai-zoo-observer.workers-bridge.workers.dev/",
   "retentionDays": 90,
   "verifiedTypes": 1,
-  "verifiedRequests": 1,
+  "verifiedRequests": 2,
   "crawlers": [
     {
       "crawler": "OAI-SearchBot",
       "company": "openai",
       "kind": "search",
       "verification": "official-ip-and-ua",
-      "requests": 1,
-      "lastSeen": "2026-11-22T21:06:28.797Z",
+      "requests": 2,
+      "lastSeen": "2026-11-23T13:06:52.200Z",
       "category": "B"
     }
   ],
@@ -22,8 +22,8 @@
     {
       "company": "openai",
       "kind": "search",
-      "requests": 52,
-      "lastSeen": "2026-11-22T21:06:28.797Z"
+      "requests": 53,
+      "lastSeen": "2026-11-23T13:06:52.200Z"
     },
     {
       "company": "openai",
@@ -41,7 +41,7 @@
   "topPages": [
     {
       "path": "/robots.txt",
-      "requests": 1
+      "requests": 2
     }
   ],
   "daily": [
@@ -50,7 +50,7 @@
       "crawler": "OAI-SearchBot",
       "kind": "search",
       "verification": "official-ip-and-ua",
-      "requests": 1,
+      "requests": 2,
       "category": "B"
     },
     {
@@ -352,16 +352,16 @@
       "kind": "search",
       "verification": "official-ip-and-ua",
       "path": "/robots.txt",
-      "requests": 52,
+      "requests": 53,
       "firstSeen": "2026-10-19T20:48:05.981Z",
-      "lastSeen": "2026-11-22T21:06:28.797Z",
+      "lastSeen": "2026-11-23T13:06:52.200Z",
       "category": "B"
     }
   ],
   "comparison": {
     "baselineAt": "2026-10-19T23:48:21.426Z",
     "before": 3,
-    "additional": 51,
+    "additional": 52,
     "note": "基线后已记录的增量；不证明由 SEO 引起，也不证明主动发现。"
   },
   "firstSeenNote": "首次时间仅在保留期内、且原记录具备首次字段时提供；旧记录缺失不反推。"
